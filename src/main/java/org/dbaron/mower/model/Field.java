@@ -3,8 +3,6 @@ package org.dbaron.mower.model;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 
-import java.util.Set;
-
 /**
  * Created by dbaron on 27/01/15.
  */
@@ -42,7 +40,7 @@ public class Field {
         return upperRightHandCorner;
     }
 
-    public void setUpperRightHandCorner(CartesianPosition upperRightHandCorner) {
+    public void setUpperRightHandCorner(Position upperRightHandCorner) {
         this.upperRightHandCorner = upperRightHandCorner;
     }
 
