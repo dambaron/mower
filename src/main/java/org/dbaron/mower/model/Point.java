@@ -23,4 +23,14 @@ public class Point {
     public void setOrientation(Orientation orientation) {
         this.orientation = orientation;
     }
+
+    public Point() {
+        this.position = null;
+        this.orientation = null;
+    }
+
+    public Point(Position position, Orientation orientation) {
+        this.position = position;
+        this.orientation = orientation;
+    }
 }

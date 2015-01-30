@@ -5,4 +5,17 @@ package org.dbaron.mower.model;
  */
 public class Orientation {
 
+    private String code;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public Orientation(String code) {
+        this.code = code;
+    }
 }
