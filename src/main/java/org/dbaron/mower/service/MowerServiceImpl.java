@@ -1,6 +1,5 @@
 package org.dbaron.mower.service;
 
-import org.dbaron.mower.exception.MowingException;
 import org.dbaron.mower.model.Field;
 import org.dbaron.mower.model.Mower;
 import org.dbaron.mower.model.RoutePoint;
@@ -41,12 +40,12 @@ public class MowerServiceImpl implements MowerService {
             registerField(field);
         }
 
-        List<Mower> mowers = mowersByField.get(field);
-        if (mowers == null) {
-            mowers = new LinkedList<>();
+        List<Mower> registeredMowers = mowersByField.get(field);
+        if (registeredMowers == null) {
+            registeredMowers = new LinkedList<>();
         }
-        mowers.add(mower);
-        mowersByField.put(field, mowers);
+        registeredMowers.add(mower);
+        mowersByField.put(field, registeredMowers);
     }
 
     @Override
@@ -54,16 +53,16 @@ public class MowerServiceImpl implements MowerService {
 
         if (mowersByField.containsKey(field)) {
 
-            List<Mower> mowers = mowersByField.get(field);
-            if (mowers.contains(mower)) {
-                mowers.remove(mower);
-                mowersByField.put(field, mowers);
+            List<Mower> registeredMowers = mowersByField.get(field);
+            if (registeredMowers.contains(mower)) {
+                registeredMowers.remove(mower);
+                mowersByField.put(field, registeredMowers);
             }
         }
     }
 
     @Override
-    public void mow(Field field) throws MowingException {
+    public void mow(Field field) {
 
         List<Mower> mowers = mowersByField.get(field);
         if (mowers != null) {
@@ -74,7 +73,7 @@ public class MowerServiceImpl implements MowerService {
     }
 
     @Override
-    public void mow(Field field, Mower mower) throws MowingException {
+    public void mow(Field field, Mower mower) {
 
         List<RoutePoint> routePoints = mower.getRoutePoints();
         for (RoutePoint routePoint : routePoints) {

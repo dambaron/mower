@@ -3,7 +3,7 @@ package org.dbaron.mower.exception;
 /**
  * Created by dbaron on 28/01/15.
  */
-public class MowingException extends Exception {
+public class MowingException extends RuntimeException {
 
     /**
      * Constructs a <code>MowingException</code> with no detail message.

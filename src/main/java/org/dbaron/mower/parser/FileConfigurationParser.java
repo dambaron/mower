@@ -22,7 +22,15 @@ public class FileConfigurationParser extends BasicConfigurationParser {
 
     private File file;
 
-    public Field getField(String line) throws IllegalArgumentException {
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+    public Field getField(String line) {
 
         Validate.notNull(line, "line is required");
         String[] split = StringUtils.split(line);
@@ -30,7 +38,6 @@ public class FileConfigurationParser extends BasicConfigurationParser {
         if (split.length != 2) {
             throw new IllegalArgumentException();
         }
-
 
         Field field = new Field();
         return field;
@@ -94,6 +101,6 @@ public class FileConfigurationParser extends BasicConfigurationParser {
     }
 
     public void parse(File file) {
-
+        Validate.notNull(file, "file is required");
     }
 }
