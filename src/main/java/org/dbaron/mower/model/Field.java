@@ -2,6 +2,7 @@ package org.dbaron.mower.model;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
+import org.apache.commons.lang3.Validate;
 
 /**
  * Created by dbaron on 27/01/15.
@@ -19,6 +20,19 @@ public class Field {
     }
 
     public Field(Position lowerLeftHandCorner, Position upperRightHandCorner) {
+
+        Validate.notNull(lowerLeftHandCorner);
+        Validate.notNull(upperRightHandCorner);
+
+        Validate.isTrue(lowerLeftHandCorner.getX() >= 0);
+        Validate.isTrue(lowerLeftHandCorner.getY() >= 0);
+
+        Validate.isTrue(upperRightHandCorner.getX() >= 0);
+        Validate.isTrue(upperRightHandCorner.getY() >= 0);
+
+        Validate.isTrue(upperRightHandCorner.getX() > lowerLeftHandCorner.getX());
+        Validate.isTrue(upperRightHandCorner.getY() > lowerLeftHandCorner.getY());
+
         this.lowerLeftHandCorner = lowerLeftHandCorner;
         this.upperRightHandCorner = upperRightHandCorner;
         for (int x = lowerLeftHandCorner.getX(); x <= upperRightHandCorner.getX(); x++) {
@@ -44,13 +58,15 @@ public class Field {
         this.upperRightHandCorner = upperRightHandCorner;
     }
 
-    public boolean isMowed() {
-        return !mowingIndex.containsValue(Boolean.FALSE);
+    public Table<Integer, Integer, Boolean> getMowingIndex() {
+        return mowingIndex;
     }
 
-    public boolean isMowed(Position position) {
+    public boolean isMowed() {
+        return getMowingIndex() != null && !getMowingIndex().containsValue(Boolean.FALSE);
+    }
 
-        Boolean isPositionMowed = mowingIndex.get(position.getX(), position.getX());
-        return (isPositionMowed != null && isPositionMowed);
+    public boolean isMowed(int x, int y) {
+        return getMowingIndex() != null && getMowingIndex().get(x, y);
     }
 }
