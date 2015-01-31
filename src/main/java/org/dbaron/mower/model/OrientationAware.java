@@ -8,5 +8,4 @@ public interface OrientationAware {
     Orientation getOrientation();
 
     Point updateOrientation(Point point, Orientation orientation);
-
 }
