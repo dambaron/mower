@@ -1,6 +1,6 @@
 package org.dbaron.mower.model;
 
-import org.dbaron.mower.exception.MowingException;
+import org.apache.commons.lang3.Validate;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,29 +11,47 @@ import java.util.List;
 public class Mower implements OrientationAware, PositionAware {
 
     private WayPoint initialWayPoint;
-    private List<WayPoint> wayPoints;
-    private List<RoutePoint> routePoints;
+    private LinkedList<WayPoint> wayPoints;
+    private LinkedList<RoutePoint> routePoints;
 
     public Mower() {
-        this.initialWayPoint = null;
+        this.initialWayPoint = new WayPoint();
         this.wayPoints = new LinkedList<>();
         this.routePoints = new LinkedList<>();
+    }
+
+    public Mower(WayPoint initialWayPoint) {
+
+        Validate.notNull(initialWayPoint, "initialWayPoint is required");
+
+        this.initialWayPoint = initialWayPoint;
+
+        this.wayPoints = new LinkedList<>();
+        this.wayPoints.add(initialWayPoint);
+
+        this.routePoints = new LinkedList<>();
+    }
+
+    public Mower(WayPoint initialWayPoint, List<RoutePoint> routePoints) {
+
+        Validate.notNull(initialWayPoint, "initialWayPoint is required");
+        Validate.notNull(routePoints, "routePoints is required");
+
+        this.initialWayPoint = initialWayPoint;
+
+        this.wayPoints = new LinkedList<>();
+        this.wayPoints.add(initialWayPoint);
+
+        this.routePoints = new LinkedList<>();
+        this.routePoints.addAll(routePoints);
     }
 
     public WayPoint getInitialWayPoint() {
         return initialWayPoint;
     }
 
-    public void setInitialWayPoint(WayPoint initialWayPoint) {
-        this.initialWayPoint = initialWayPoint;
-    }
-
     public List<WayPoint> getWayPoints() {
         return wayPoints;
-    }
-
-    public void setWayPoints(List<WayPoint> wayPoints) {
-        this.wayPoints = wayPoints;
     }
 
     public List<RoutePoint> getRoutePoints() {
@@ -41,7 +59,8 @@ public class Mower implements OrientationAware, PositionAware {
     }
 
     public void setRoutePoints(List<RoutePoint> routePoints) {
-        this.routePoints = routePoints;
+        this.routePoints = new LinkedList<>();
+        this.routePoints.addAll(routePoints);
     }
 
     @Override
@@ -54,10 +73,14 @@ public class Mower implements OrientationAware, PositionAware {
         return null;
     }
 
-
     @Override
     public Position getPosition() {
-        return null;
+
+        if (wayPoints.isEmpty()) {
+            return initialWayPoint.getPosition();
+        }
+
+        return this.wayPoints.getLast().getPosition();
     }
 
     @Override
