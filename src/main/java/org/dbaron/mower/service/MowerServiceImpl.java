@@ -6,7 +6,10 @@ import org.dbaron.mower.model.RoutePoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dbaron on 28/01/15.
