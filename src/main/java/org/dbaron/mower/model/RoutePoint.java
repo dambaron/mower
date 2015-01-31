@@ -5,4 +5,11 @@ package org.dbaron.mower.model;
  */
 public class RoutePoint extends Point {
 
+    public RoutePoint() {
+        super();
+    }
+
+    public RoutePoint(Position position, Orientation orientation) {
+        super(position, orientation);
+    }
 }
