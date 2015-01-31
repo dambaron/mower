@@ -15,6 +15,7 @@ import org.junit.Test;
 import java.util.LinkedList;
 import java.util.List;
 
+import static junit.framework.Assert.fail;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -32,11 +33,11 @@ public class PositionValidatorTest {
             new Position(1, 1),
             DEFAULT_ORIENTATION);
 
-    private static final Position DEFAUT_LOWER_LEFT_HAND_CORNER = new Position(0, 0);
-    private static final Position DEFAUT_UPPER_RIGHT_HAND_CORNER = new Position(2, 2);
+    private static final Position DEFAULT_LOWER_LEFT_HAND_CORNER = new Position(0, 0);
+    private static final Position DEFAULT_UPPER_RIGHT_HAND_CORNER = new Position(1, 1);
 
-    private static final Field DEFAULT_FIELD = new Field(DEFAUT_LOWER_LEFT_HAND_CORNER,
-            DEFAUT_UPPER_RIGHT_HAND_CORNER);
+    private static final Field DEFAULT_FIELD = new Field(DEFAULT_LOWER_LEFT_HAND_CORNER,
+            DEFAULT_UPPER_RIGHT_HAND_CORNER);
 
     private PositionValidator positionValidator = new PositionValidator();
 
@@ -65,15 +66,26 @@ public class PositionValidatorTest {
 
             try {
                 positionValidator.validateIsInsideField(outOfFieldPosition, DEFAULT_FIELD);
-            } catch (MowingException me) {
-                assertThat(me, is(instanceOf(OutOfFieldException.class)));
+                fail();
+            } catch (OutOfFieldException oofe) {
+                //DO NOTHING
             }
         }
     }
 
     @Test
     public void testValidateIsInsideField() {
-        positionValidator.validateIsInsideField(DEFAULT_POSITION, DEFAULT_FIELD);
+
+        ImmutableList<Position> inFieldPositions = ImmutableList.of(
+                new Position(0, 0),
+                new Position(0, 1),
+                new Position(1, 0),
+                new Position(1, 1)
+        );
+
+        for (Position inFieldPosition : inFieldPositions.asList()) {
+            positionValidator.validateIsInsideField(inFieldPosition, DEFAULT_FIELD);
+        }
     }
 
     @Test(expected = NullPointerException.class)
@@ -101,6 +113,7 @@ public class PositionValidatorTest {
 
             try {
                 positionValidator.validateIsFreePosition(position, mowersOnTheDiagonal);
+                fail();
             } catch (MowingException me) {
                 assertThat(me, is(instanceOf(OccupiedPositionException.class)));
             }

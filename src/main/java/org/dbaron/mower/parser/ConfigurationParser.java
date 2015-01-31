@@ -6,27 +6,28 @@ import org.dbaron.mower.model.Move;
 import org.dbaron.mower.model.Point;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dbaron on 29/01/15.
  */
 public interface ConfigurationParser {
 
-    List<String> getOrientationsDictionnary();
+    Set<String> getOrientationsDictionnary();
 
-    List<String> getMovesDictionnary();
+    Set<String> getMovesDictionnary();
 
-    Configuration parse();
+    Configuration parseConfiguration();
 
-    Field parseField(String field);
-
-    Point parserPoint(String pointDefinition);
-
-    List<Move> parseMoveSequence(String moveSequence);
+    List<String> parseField(String fieldDefinition);
+    List<String> parsePoint(String pointDefinition);
+    List<String> parseMoves(String moveSequence);
 
     void validateField(List<String> fieldElements);
-
     void validatePoint(List<String> pointElements);
+    void validateMoves(List<String> moveElements);
 
-    void validateMoves(List<String> moves);
+    Field buildField(String fieldDefinition);
+    Point buildPoint(String pointDefinition);
+    List<Move> buildMoves(String moveSequence);
 }

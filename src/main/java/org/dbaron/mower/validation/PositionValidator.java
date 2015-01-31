@@ -26,22 +26,28 @@ public class PositionValidator {
         Position upperRightHandCorner = field.getUpperRightHandCorner();
 
         int minX = 0;
+        int minY = 0;
         if (lowerLeftHandCorner != null) {
             minX = lowerLeftHandCorner.getX();
+            minY = lowerLeftHandCorner.getY();
         }
 
+        int maxX = 0;
         int maxY = 0;
         if (upperRightHandCorner != null) {
+            maxX = upperRightHandCorner.getX();
             maxY = upperRightHandCorner.getY();
         }
 
         int currentX = position.getX();
         int currentY = position.getY();
         if (currentX < minX
+                || currentX > maxX
+                || currentY < minY
                 || currentY > maxY) {
 
-            LOGGER.error("Position {} is out of field", position);
-            throw new OutOfFieldException("Position " + position + " is out of field");
+            LOGGER.error("{} is out of field", position);
+            throw new OutOfFieldException(position + " is out of field");
         }
 
     }

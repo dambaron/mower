@@ -1,10 +1,8 @@
 package org.dbaron.mower.parser;
 
 import com.google.common.base.CharMatcher;
-import com.google.common.collect.ImmutableList;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
-import org.dbaron.mower.model.Configuration;
 import org.dbaron.mower.model.Field;
 import org.dbaron.mower.model.Move;
 import org.dbaron.mower.model.Orientation;
@@ -14,11 +12,12 @@ import org.dbaron.mower.model.Position;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dbaron on 29/01/15.
  */
-public class FileConfigurationParser extends BasicConfigurationParser {
+public class FileConfigurationParser extends BasicConfigurationParser implements ConfigurationParser {
 
     private File file;
 
@@ -71,8 +70,8 @@ public class FileConfigurationParser extends BasicConfigurationParser {
         return moves;
     }
 
-    public FileConfigurationParser(List<String> orientationsDictionnary,
-                                   List<String> movesDictionnary,
+    public FileConfigurationParser(Set<String> orientationsDictionnary,
+                                   Set<String> movesDictionnary,
                                    File file) {
         super(orientationsDictionnary, movesDictionnary);
         this.file = file;
