@@ -15,7 +15,28 @@ public class Orientation {
         this.code = code;
     }
 
+    public Orientation() {
+        this.code = null;
+    }
+
     public Orientation(String code) {
         this.code = code;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Orientation that = (Orientation) o;
+
+        if (code != null ? !code.equals(that.code) : that.code != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return code != null ? code.hashCode() : 0;
     }
 }
