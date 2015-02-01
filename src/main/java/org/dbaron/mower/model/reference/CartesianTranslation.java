@@ -1,14 +1,12 @@
 package org.dbaron.mower.model.reference;
 
 /**
- * Created by dbaron on 27/01/15.
+ * Created by dbaron on 29/01/15.
  */
-public enum CardinalOrientation {
+public enum CartesianTranslation {
 
-    N("N", "NORTH"),
-    S("S", "SOUTH"),
-    W("W", "WEST"),
-    E("E", "EAST");
+    A("A", "FORWARD"),
+    R("R", "BACKWARD");
 
     private String code;
     private String label;
@@ -21,8 +19,7 @@ public enum CardinalOrientation {
         return label;
     }
 
-    CardinalOrientation(String code, String label) {
-        this.code = code;
+    CartesianTranslation(String code, String label) {
         this.label = label;
     }
 }

@@ -32,7 +32,7 @@ public class BasicConfigurationParserTest {
 
     private static final String DEFAULT_POINT_DEFINITION = "10 42 W";
     private static final Position POSITION_10_42 = new Position(10, 42);
-    private static final Orientation ORIENTATION_W = new Orientation(CardinalOrientation.WEST.getCode());
+    private static final Orientation ORIENTATION_W = new Orientation(CardinalOrientation.W.getCode());
     private static final Point POINT_10_42_W = new Point(POSITION_10_42, ORIENTATION_W);
 
     private BasicConfigurationParser basicConfigurationParser =

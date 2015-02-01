@@ -9,6 +9,9 @@ import org.dbaron.mower.model.Move;
 import org.dbaron.mower.model.Orientation;
 import org.dbaron.mower.model.Point;
 import org.dbaron.mower.model.Position;
+import org.dbaron.mower.model.Rotation;
+import org.dbaron.mower.model.Translation;
+import org.dbaron.mower.service.MoveProviderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +28,16 @@ import java.util.Set;
 public class BasicConfigurationParser extends AbstractConfigurationParser implements ConfigurationParser {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BasicConfigurationParser.class);
+
+    private MoveProviderService moveProviderService;
+
+    public MoveProviderService getMoveProviderService() {
+        return moveProviderService;
+    }
+
+    public void setMoveProviderService(MoveProviderService moveProviderService) {
+        this.moveProviderService = moveProviderService;
+    }
 
     public BasicConfigurationParser(Set<String> orientationsDictionnary,
                                     Set<String> movesDictionnary) {
@@ -114,13 +127,7 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
     }
 
     private void validateDictionnaryValue(String value, Set<String> dictionnary) {
-//        Validate.notNull(value);
-//        Validate.notNull(dictionnary);
-//
-//        if (!dictionnary.contains(value)) {
-//            LOGGER.error("Unknown value in dictionnary : {}", value);
-//            throw new IllegalArgumentException("Unknown value in dictionnary : " + value);
-//        }
+
         validateDictionnaryValues(Arrays.asList(value), dictionnary);
     }
 
@@ -213,7 +220,29 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
 
         List<Move> moves = new LinkedList<>();
         for (String moveElement : moveElements) {
-            moves.add(new Move(moveElement));
+
+            Translation translation = moveProviderService.getTranslation(moveElement);
+            Rotation rotation = moveProviderService.getRotation(moveElement);
+
+            if (translation == null && rotation == null) {
+                LOGGER.error("No suitable move found for code {}", moveElement);
+                throw new IllegalArgumentException("No suitable move found for " + moveElement);
+            }
+
+            if (translation != null && rotation != null) {
+                LOGGER.error("Code {} applies to both translation and rotation", moveElement);
+                throw new IllegalArgumentException("Code " + moveElement + " applies to both translation and rotation");
+            }
+
+            if (translation != null && rotation == null) {
+                LOGGER.debug("Adding translation to moves");
+                moves.add(translation);
+            }
+
+            if (translation == null && rotation != null) {
+                LOGGER.debug("Adding rotation to moves");
+                moves.add(rotation);
+            }
         }
 
         return moves;

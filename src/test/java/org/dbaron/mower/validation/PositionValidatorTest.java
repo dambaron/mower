@@ -23,7 +23,7 @@ import static org.hamcrest.core.Is.is;
 public class PositionValidatorTest {
 
     private static final Position DEFAULT_POSITION = new Position(1, 1);
-    private static final Orientation DEFAULT_ORIENTATION = new Orientation(CardinalOrientation.NORTH.getCode());
+    private static final Orientation DEFAULT_ORIENTATION = new Orientation(CardinalOrientation.N.getCode());
 
     private static final WayPoint WAY_POINT_0_0_N = new WayPoint(
             new Position(0, 0),
