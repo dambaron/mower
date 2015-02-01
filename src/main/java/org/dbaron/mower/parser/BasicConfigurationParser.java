@@ -12,6 +12,7 @@ import org.dbaron.mower.model.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -41,8 +42,40 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
     }
 
     @Override
-    public Configuration parseConfiguration() {
-        return null;
+    public Configuration parseConfiguration(List<String> configurationElements) {
+        Validate.notNull(configurationElements);
+
+        int nbElements = configurationElements.size();
+        if (nbElements < 3) {
+            LOGGER.error("Configuration should contain 3 elements at least");
+            throw new IllegalArgumentException("Configuration should contain 3 elements at least");
+        }
+
+        if (nbElements % 2 == 0) {
+            LOGGER.error("Configuration should contain an odd number of elements");
+            throw new IllegalArgumentException("Configuration should contain an odd number of elements");
+        }
+
+        Field field = buildField(configurationElements.get(0));
+
+        List<Point> startingPoints = new LinkedList<>();
+        List<List<Move>> moveSequences = new LinkedList<>();
+
+        for (int i = 1; i < configurationElements.size(); i = i + 2) {
+
+            Point startingPoint = buildPoint(configurationElements.get(i));
+            List<Move> moves = buildMoves(configurationElements.get(i + 1));
+
+            startingPoints.add(startingPoint);
+            moveSequences.add(moves);
+        }
+
+        return new Configuration(field, startingPoints, moveSequences);
+    }
+
+    @Override
+    public Configuration parseConfiguration(File file) {
+        throw new UnsupportedOperationException();
     }
 
     private List<String> parseInput(String input) {
@@ -63,7 +96,14 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
 
     @Override
     public List<String> parseMoves(String moveSequence) {
-        return parseMoves(moveSequence);
+        Validate.notBlank(moveSequence, "moveSequence was blank");
+
+        List<String> moves = new LinkedList<>();
+        char[] chars = moveSequence.toCharArray();
+        for (char aChar : chars) {
+            moves.add(String.valueOf(aChar));
+        }
+        return moves;
     }
 
     private void validateNumericValue(String value) {
@@ -74,13 +114,14 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
     }
 
     private void validateDictionnaryValue(String value, Set<String> dictionnary) {
-        Validate.notNull(value);
-        Validate.notNull(dictionnary);
-
-        if (!dictionnary.contains(value)) {
-            LOGGER.error("Unknown value in dictionnary : {}", value);
-            throw new IllegalArgumentException("Unknown value in dictionnary : " + value);
-        }
+//        Validate.notNull(value);
+//        Validate.notNull(dictionnary);
+//
+//        if (!dictionnary.contains(value)) {
+//            LOGGER.error("Unknown value in dictionnary : {}", value);
+//            throw new IllegalArgumentException("Unknown value in dictionnary : " + value);
+//        }
+        validateDictionnaryValues(Arrays.asList(value), dictionnary);
     }
 
     private void validateDictionnaryValues(List<String> values, Set<String> dictionnary) {
@@ -92,8 +133,8 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
         if (!dictionnary.containsAll(valueSet)) {
 
             Sets.SetView<String> difference = Sets.difference(valueSet, dictionnary);
-            LOGGER.error("Unknown values in dictionnary : {}", difference);
-            throw new IllegalArgumentException("Unknown values in dictionnary : " + difference);
+            LOGGER.error("Unknown values found : {}", difference);
+            throw new IllegalArgumentException("Unknown values found : " + difference);
         }
     }
 
