@@ -60,8 +60,8 @@ public class PositionValidator {
             Position mowerPosition = mower.getPosition();
 
             if (position.equals(mowerPosition)) {
-                LOGGER.error("Position {} is occupied", position);
-                throw new OccupiedPositionException("Position " + position + " is occupied");
+                LOGGER.error("{} is occupied", position);
+                throw new OccupiedPositionException(position + " is occupied");
             }
         }
     }
