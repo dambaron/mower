@@ -1,7 +1,5 @@
 package org.dbaron.mower.model;
 
-import org.dbaron.mower.model.reference.CardinalOrientation;
-
 /**
  * Created by dbaron on 27/01/15.
  */
@@ -18,5 +16,13 @@ public class Move {
 
     public String getCode() {
         return code;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Move{");
+        sb.append("code='").append(code).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

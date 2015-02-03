@@ -20,6 +20,7 @@ public enum CartesianTranslation {
     }
 
     CartesianTranslation(String code, String label) {
+        this.code = code;
         this.label = label;
     }
 }

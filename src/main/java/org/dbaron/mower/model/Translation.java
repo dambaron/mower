@@ -12,4 +12,12 @@ public class Translation extends Move {
     public Translation(String code) {
         super(code);
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Translation{");
+        sb.append("code='").append(getCode()).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

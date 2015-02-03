@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
+    <util:set id="orientationsDictionnary">
+        <value>N</value>
+        <value>S</value>
+        <value>W</value>
+        <value>E</value>
+    </util:set>
+
+    <util:set id="movesDictionnary">
+        <value>A</value>
+        <value>R</value>
+        <value>G</value>
+        <value>D</value>
+    </util:set>
 </beans>

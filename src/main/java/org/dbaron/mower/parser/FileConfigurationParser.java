@@ -1,15 +1,8 @@
 package org.dbaron.mower.parser;
 
-import com.google.common.base.CharMatcher;
 import com.google.common.io.Files;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.dbaron.mower.model.Configuration;
-import org.dbaron.mower.model.Field;
-import org.dbaron.mower.model.Move;
-import org.dbaron.mower.model.Orientation;
-import org.dbaron.mower.model.Point;
-import org.dbaron.mower.model.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +22,10 @@ public class FileConfigurationParser extends BasicConfigurationParser implements
 
     private File file;
 
+    public FileConfigurationParser() {
+        super();
+    }
+
     public FileConfigurationParser(Set<String> orientationsDictionnary,
                                    Set<String> movesDictionnary) {
         super(orientationsDictionnary, movesDictionnary);
@@ -42,7 +39,6 @@ public class FileConfigurationParser extends BasicConfigurationParser implements
         this.file = file;
     }
 
-    @Override
     public Configuration parseConfiguration(File file) {
         Validate.notNull(file, "file is required");
 

@@ -14,8 +14,8 @@ import org.dbaron.mower.model.Translation;
 import org.dbaron.mower.service.MoveProviderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -29,6 +29,7 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BasicConfigurationParser.class);
 
+    @Autowired
     private MoveProviderService moveProviderService;
 
     public MoveProviderService getMoveProviderService() {
@@ -37,6 +38,10 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
 
     public void setMoveProviderService(MoveProviderService moveProviderService) {
         this.moveProviderService = moveProviderService;
+    }
+
+    public BasicConfigurationParser() {
+        super();
     }
 
     public BasicConfigurationParser(Set<String> orientationsDictionnary,
@@ -86,11 +91,6 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
         return new Configuration(field, startingPoints, moveSequences);
     }
 
-    @Override
-    public Configuration parseConfiguration(File file) {
-        throw new UnsupportedOperationException();
-    }
-
     private List<String> parseInput(String input) {
         Validate.notBlank(input, "input was blank");
 
@@ -127,7 +127,6 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
     }
 
     private void validateDictionnaryValue(String value, Set<String> dictionnary) {
-
         validateDictionnaryValues(Arrays.asList(value), dictionnary);
     }
 
@@ -235,12 +234,12 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
             }
 
             if (translation != null && rotation == null) {
-                LOGGER.debug("Adding translation to moves");
+                LOGGER.debug("Adding {} to moves", translation);
                 moves.add(translation);
             }
 
             if (translation == null && rotation != null) {
-                LOGGER.debug("Adding rotation to moves");
+                LOGGER.debug("Adding {} to moves", rotation);
                 moves.add(rotation);
             }
         }

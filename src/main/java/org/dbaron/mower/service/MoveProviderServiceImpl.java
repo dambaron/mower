@@ -8,8 +8,6 @@ import org.dbaron.mower.model.reference.CartesianTranslation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.datatransfer.Transferable;
-
 /**
  * Created by dbaron on 01/02/15.
  */
@@ -26,8 +24,8 @@ public class MoveProviderServiceImpl implements MoveProviderService {
             CartesianTranslation ct = CartesianTranslation.valueOf(moveCode);
             translation = new Translation(ct.getCode());
         } catch (IllegalArgumentException iae) {
-            LOGGER.debug("Code {} was not found in the translations referential. Returning null",
-                    moveCode);
+            //LOGGER.debug("Code {} was not found in the translations referential. Returning null",
+            //        moveCode);
         }
         return translation;
     }
@@ -41,8 +39,8 @@ public class MoveProviderServiceImpl implements MoveProviderService {
             CartesianRotation cartesianRotation = CartesianRotation.valueOf(moveCode);
             rotation = new Rotation(cartesianRotation.getCode());
         } catch (IllegalArgumentException iae) {
-            LOGGER.debug("Code {} was not found in the rotations referential. Returning null",
-                    moveCode);
+            //LOGGER.debug("Code {} was not found in the rotations referential. Returning null",
+            //        moveCode);
         }
         return rotation;
     }

@@ -12,6 +12,10 @@ public abstract class AbstractConfigurationParser {
     private ImmutableSet<String> orientationsDictionnary;
     private ImmutableSet<String> movesDictionnary;
 
+    public AbstractConfigurationParser() {
+        //DO NOTHING
+    }
+
     public AbstractConfigurationParser(Set<String> orientationsDictionnary,
                                        Set<String> movesDictionnary) {
 

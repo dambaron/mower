@@ -9,7 +9,6 @@ import org.dbaron.mower.model.reference.CardinalOrientation;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -42,13 +41,6 @@ public class BasicConfigurationParserTest {
     @Ignore
     public void testParseConfigurationFromList() {
         //basicConfigurationParser.parseConfiguration();
-    }
-
-    @Test(expected = UnsupportedOperationException.class)
-    public void testParseConfigurationFromFile() {
-
-        File file = new File("/fake/path/to/file.txt");
-        basicConfigurationParser.parseConfiguration(file);
     }
 
     @Test
