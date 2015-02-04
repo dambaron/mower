@@ -12,12 +12,12 @@ public class Mower implements OrientationAware, PositionAware {
 
     private WayPoint initialWayPoint;
     private LinkedList<WayPoint> wayPoints;
-    private LinkedList<RoutePoint> routePoints;
+    private LinkedList<Move> moveSequence;
 
     public Mower() {
         this.initialWayPoint = new WayPoint();
         this.wayPoints = new LinkedList<>();
-        this.routePoints = new LinkedList<>();
+        this.moveSequence = new LinkedList<>();
     }
 
     public Mower(WayPoint initialWayPoint) {
@@ -29,21 +29,21 @@ public class Mower implements OrientationAware, PositionAware {
         this.wayPoints = new LinkedList<>();
         this.wayPoints.add(initialWayPoint);
 
-        this.routePoints = new LinkedList<>();
+        this.moveSequence = new LinkedList<>();
     }
 
-    public Mower(WayPoint initialWayPoint, List<RoutePoint> routePoints) {
+    public Mower(WayPoint initialWayPoint, List<Move> moveSequence) {
 
         Validate.notNull(initialWayPoint, "initialWayPoint is required");
-        Validate.notNull(routePoints, "routePoints is required");
+        Validate.notNull(moveSequence, "moveSequence is required");
 
         this.initialWayPoint = initialWayPoint;
 
         this.wayPoints = new LinkedList<>();
         this.wayPoints.add(initialWayPoint);
 
-        this.routePoints = new LinkedList<>();
-        this.routePoints.addAll(routePoints);
+        this.moveSequence = new LinkedList<>();
+        this.moveSequence.addAll(moveSequence);
     }
 
     public WayPoint getInitialWayPoint() {
@@ -54,13 +54,13 @@ public class Mower implements OrientationAware, PositionAware {
         return wayPoints;
     }
 
-    public List<RoutePoint> getRoutePoints() {
-        return routePoints;
+    public List<Move> getMoveSequence() {
+        return moveSequence;
     }
 
-    public void setRoutePoints(List<RoutePoint> routePoints) {
-        this.routePoints = new LinkedList<>();
-        this.routePoints.addAll(routePoints);
+    public void setMoveSequence(List<Move> moveSequence) {
+        this.moveSequence = new LinkedList<>();
+        this.moveSequence.addAll(moveSequence);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class Mower implements OrientationAware, PositionAware {
     }
 
     @Override
-    public Point updateOrientation(Point point, Orientation orientation) {
+    public Point updateOrientation(Orientation orientation) {
         return null;
     }
 
@@ -84,7 +84,7 @@ public class Mower implements OrientationAware, PositionAware {
     }
 
     @Override
-    public Point updatePosition(Point point, Position position) {
+    public Point updatePosition(Position position) {
         return null;
     }
 }

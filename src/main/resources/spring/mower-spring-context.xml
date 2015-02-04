@@ -18,4 +18,7 @@
 
     <bean id="moveProviderService" class="org.dbaron.mower.service.MoveProviderServiceImpl"/>
 
+    <bean id="pointProviderService" class="org.dbaron.mower.service.PointProviderServiceImpl"/>
+
+    <bean id="mowerService" class="org.dbaron.mower.service.MowerServiceImpl"/>
 </beans>

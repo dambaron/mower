@@ -1,10 +1,19 @@
 package org.dbaron.mower.service;
 
+import org.apache.commons.lang3.Validate;
+import org.dbaron.mower.exception.OccupiedPositionException;
+import org.dbaron.mower.exception.OutOfFieldException;
 import org.dbaron.mower.model.Field;
+import org.dbaron.mower.model.Move;
 import org.dbaron.mower.model.Mower;
-import org.dbaron.mower.model.RoutePoint;
+import org.dbaron.mower.model.Orientation;
+import org.dbaron.mower.model.Point;
+import org.dbaron.mower.model.Position;
+import org.dbaron.mower.model.WayPoint;
+import org.dbaron.mower.validation.PositionValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -17,6 +26,11 @@ import java.util.Map;
 public class MowerServiceImpl implements MowerService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MowerServiceImpl.class);
+
+    private PositionValidator positionValidator = new PositionValidator();
+
+    @Autowired
+    private PointProviderService pointProviderService;
 
     private Map<Field, List<Mower>> mowersByField = new HashMap<>();
 
@@ -77,10 +91,28 @@ public class MowerServiceImpl implements MowerService {
 
     @Override
     public void mow(Field field, Mower mower) {
+        Validate.notNull(field, "field is required");
+        Validate.notNull(mower, "mower is required");
 
-        List<RoutePoint> routePoints = mower.getRoutePoints();
-        for (RoutePoint routePoint : routePoints) {
+        List<Mower> mowersInField = mowersByField.get(field);
+        for (Move move : mower.getMoveSequence()) {
 
+            Point currentPoint = new Point(mower.getPosition(), mower.getOrientation());
+            Point nextPoint = pointProviderService.getNextPoint(currentPoint, move);
+            Position nextPosition = nextPoint.getPosition();
+            Orientation nextOrientation = nextPoint.getOrientation();
+            try {
+                positionValidator.validateIsInsideField(nextPosition, field);
+                positionValidator.validateIsFreePosition(nextPosition, mower, mowersInField);
+
+                WayPoint wayPoint = new WayPoint(nextPosition, nextOrientation);
+                mower.getWayPoints().add(wayPoint);
+                mower.updatePosition(nextPosition);
+                mower.updateOrientation(nextOrientation);
+
+            } catch (OutOfFieldException | OccupiedPositionException e) {
+                LOGGER.error("{} is not mowable. Waiting for the next valid move", nextPosition, e);
+            }
         }
     }
 }
