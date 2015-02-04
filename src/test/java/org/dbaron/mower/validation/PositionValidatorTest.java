@@ -90,16 +90,23 @@ public class PositionValidatorTest {
 
     @Test(expected = NullPointerException.class)
     public void testValidateIsFreePositionThrowsNullPointerExceptionWhenPositionIsNull() {
-        positionValidator.validateIsFreePosition(null, new LinkedList<Mower>());
+        positionValidator.validateIsFreePosition(null, new Mower(), new LinkedList<Mower>());
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testValidateIsFreePositionThrowsNullPointerExceptionWhenRunningMowerIsNull() {
+        positionValidator.validateIsFreePosition(new Position(), null, new LinkedList<Mower>());
     }
 
     @Test(expected = NullPointerException.class)
     public void testValidateIsFreePositionThrowsNullPointerExceptionWhenMowersIsNull() {
-        positionValidator.validateIsFreePosition(new Position(), null);
+        positionValidator.validateIsFreePosition(new Position(), new Mower(), null);
     }
 
     @Test
     public void testValidateIsFreePositionThrowsOccupiedPositionException() {
+
+        Mower runningMower = new Mower();
 
         List<Mower> mowersOnTheDiagonal = new LinkedList<>();
         mowersOnTheDiagonal.add(new Mower(WAY_POINT_0_0_N));
@@ -112,7 +119,7 @@ public class PositionValidatorTest {
         for (Position position : positions) {
 
             try {
-                positionValidator.validateIsFreePosition(position, mowersOnTheDiagonal);
+                positionValidator.validateIsFreePosition(position, runningMower, mowersOnTheDiagonal);
                 fail();
             } catch (MowingException me) {
                 assertThat(me, is(instanceOf(OccupiedPositionException.class)));
