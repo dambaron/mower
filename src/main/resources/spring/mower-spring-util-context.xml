@@ -6,16 +6,16 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <util:set id="orientationsDictionnary">
-        <value>N</value>
-        <value>S</value>
-        <value>W</value>
-        <value>E</value>
+        <value>#{T(org.dbaron.mower.model.reference.CardinalOrientation).N.code}</value>
+        <value>#{T(org.dbaron.mower.model.reference.CardinalOrientation).S.code}</value>
+        <value>#{T(org.dbaron.mower.model.reference.CardinalOrientation).W.code}</value>
+        <value>#{T(org.dbaron.mower.model.reference.CardinalOrientation).E.code}</value>
     </util:set>
 
     <util:set id="movesDictionnary">
-        <value>A</value>
-        <value>R</value>
-        <value>G</value>
-        <value>D</value>
+        <value>#{T(org.dbaron.mower.model.reference.CartesianTranslation).A.code}</value>
+        <value>#{T(org.dbaron.mower.model.reference.CartesianTranslation).R.code}</value>
+        <value>#{T(org.dbaron.mower.model.reference.CartesianRotation).G.code}</value>
+        <value>#{T(org.dbaron.mower.model.reference.CartesianRotation).D.code}</value>
     </util:set>
 </beans>
