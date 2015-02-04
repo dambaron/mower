@@ -98,7 +98,7 @@ public class MowerServiceImpl implements MowerService {
         for (Move move : mower.getMoveSequence()) {
 
             Point currentPoint = new Point(mower.getPosition(), mower.getOrientation());
-            Point nextPoint = pointProviderService.getNextPoint(currentPoint, move);
+            Point nextPoint = pointProviderService.applyMove(move, currentPoint);
             Position nextPosition = nextPoint.getPosition();
             Orientation nextOrientation = nextPoint.getOrientation();
             try {

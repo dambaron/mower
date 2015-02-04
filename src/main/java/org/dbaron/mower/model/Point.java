@@ -1,10 +1,5 @@
 package org.dbaron.mower.model;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.Validate;
-import org.dbaron.mower.model.reference.CartesianRotation;
-import org.dbaron.mower.model.reference.CartesianTranslation;
-
 /**
  * Created by dbaron on 28/01/15.
  */
@@ -37,43 +32,6 @@ public class Point {
     public Point(Position position, Orientation orientation) {
         this.position = position;
         this.orientation = orientation;
-    }
-
-    public Point applyMove(String moveCode) {
-        Validate.notNull(moveCode, "moveCode is required");
-
-        boolean isRotation, isTranslation;
-
-        Position currentPosition = this.getPosition();
-        Orientation currentOrientation = this.getOrientation();
-
-        Position nextPosition = null;
-        Orientation nextOrientation = null;
-
-        isRotation = (StringUtils.equals(moveCode, CartesianRotation.G.getCode())
-                || StringUtils.equals(moveCode, CartesianRotation.D.getCode()));
-
-        isTranslation = (StringUtils.equals(moveCode, CartesianTranslation.A.getCode())
-                || StringUtils.equals(moveCode, CartesianTranslation.R.getCode()));
-
-
-        //Rotations
-        if (isRotation
-                && currentOrientation != null) {
-            nextOrientation = currentOrientation.applyRotation(moveCode);
-        }
-
-        //Translations
-        if (isTranslation
-                && currentPosition != null
-                && currentOrientation != null) {
-            nextPosition = currentPosition.applyTranslation(moveCode, currentOrientation);
-        }
-
-        nextPosition = (nextPosition != null ? nextPosition : currentPosition);
-        nextOrientation = (nextOrientation != null ? nextOrientation : currentOrientation);
-
-        return new Point(nextPosition, nextOrientation);
     }
 
     @Override
