@@ -52,16 +52,21 @@ public class PositionValidator {
 
     }
 
-    public void validateIsFreePosition(Position position, List<Mower> mowers) {
+    public void validateIsFreePosition(Position position, Mower runningMower, List<Mower> mowers) {
         Validate.notNull(position, "position is required");
+        Validate.notNull(runningMower, "runningMower is required");
         Validate.notNull(mowers, "mowers is required");
 
         for (Mower mower : mowers) {
-            Position mowerPosition = mower.getPosition();
 
-            if (position.equals(mowerPosition)) {
-                LOGGER.error("{} is occupied", position);
-                throw new OccupiedPositionException(position + " is occupied");
+            if (!runningMower.equals(mower)) {
+
+                Position mowerPosition = mower.getPosition();
+
+                if (position.equals(mowerPosition)) {
+                    LOGGER.error("{} is occupied", position);
+                    throw new OccupiedPositionException(position + " is occupied");
+                }
             }
         }
     }
