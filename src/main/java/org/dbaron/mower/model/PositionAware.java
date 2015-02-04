@@ -7,5 +7,5 @@ public interface PositionAware {
 
     Position getPosition();
 
-    Point updatePosition(Point point, Position position);
+    Point updatePosition(Position position);
 }

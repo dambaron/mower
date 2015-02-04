@@ -11,7 +11,7 @@ public class FlatRectangularFieldMower extends Mower implements OrientationAware
     }
 
     @Override
-    public Point updateOrientation(Point point, Orientation orientation) {
+    public Point updateOrientation(Orientation orientation) {
         return null;
     }
 
@@ -22,7 +22,7 @@ public class FlatRectangularFieldMower extends Mower implements OrientationAware
     }
 
     @Override
-    public Point updatePosition(Point point, Position position) {
+    public Point updatePosition(Position position) {
         return null;
     }
 }
