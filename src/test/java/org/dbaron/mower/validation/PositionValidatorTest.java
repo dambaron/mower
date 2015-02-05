@@ -12,8 +12,10 @@ import org.dbaron.mower.model.WayPoint;
 import org.dbaron.mower.model.reference.CardinalOrientation;
 import org.junit.Test;
 
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import static junit.framework.Assert.fail;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -23,7 +25,8 @@ import static org.hamcrest.core.Is.is;
 public class PositionValidatorTest {
 
     private static final Position DEFAULT_POSITION = new Position(1, 1);
-    private static final Orientation DEFAULT_ORIENTATION = new Orientation(CardinalOrientation.N.getCode());
+    private static final Orientation DEFAULT_ORIENTATION = new Orientation(
+            CardinalOrientation.N.getCode());
 
     private static final WayPoint WAY_POINT_0_0_N = new WayPoint(
             new Position(0, 0),
@@ -90,17 +93,23 @@ public class PositionValidatorTest {
 
     @Test(expected = NullPointerException.class)
     public void testValidateIsFreePositionThrowsNullPointerExceptionWhenPositionIsNull() {
-        positionValidator.validateIsFreePosition(null, new Mower(), new LinkedList<Mower>());
+        positionValidator.validateIsFreePosition(null,
+                new Mower(),
+                new LinkedHashSet<Mower>());
     }
 
     @Test(expected = NullPointerException.class)
     public void testValidateIsFreePositionThrowsNullPointerExceptionWhenRunningMowerIsNull() {
-        positionValidator.validateIsFreePosition(new Position(), null, new LinkedList<Mower>());
+        positionValidator.validateIsFreePosition(new Position(),
+                null,
+                new LinkedHashSet<Mower>());
     }
 
     @Test(expected = NullPointerException.class)
     public void testValidateIsFreePositionThrowsNullPointerExceptionWhenMowersIsNull() {
-        positionValidator.validateIsFreePosition(new Position(), new Mower(), null);
+        positionValidator.validateIsFreePosition(new Position(),
+                new Mower(),
+                null);
     }
 
     @Test
@@ -108,7 +117,7 @@ public class PositionValidatorTest {
 
         Mower runningMower = new Mower();
 
-        List<Mower> mowersOnTheDiagonal = new LinkedList<>();
+        Set<Mower> mowersOnTheDiagonal = new LinkedHashSet<>();
         mowersOnTheDiagonal.add(new Mower(WAY_POINT_0_0_N));
         mowersOnTheDiagonal.add(new Mower(WAY_POINT_1_1_N));
 
@@ -119,7 +128,9 @@ public class PositionValidatorTest {
         for (Position position : positions) {
 
             try {
-                positionValidator.validateIsFreePosition(position, runningMower, mowersOnTheDiagonal);
+                positionValidator.validateIsFreePosition(position,
+                        runningMower,
+                        mowersOnTheDiagonal);
                 fail();
             } catch (MowingException me) {
                 assertThat(me, is(instanceOf(OccupiedPositionException.class)));

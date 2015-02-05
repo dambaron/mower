@@ -44,4 +44,12 @@ public class Orientation {
     public int hashCode() {
         return code != null ? code.hashCode() : 0;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Orientation{");
+        sb.append("code='").append(code).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }

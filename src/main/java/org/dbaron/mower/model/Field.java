@@ -69,4 +69,35 @@ public class Field {
     public boolean isMowed(int x, int y) {
         return getMowingIndex() != null && getMowingIndex().get(x, y);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Field field = (Field) o;
+
+        if (lowerLeftHandCorner != null ? !lowerLeftHandCorner.equals(field.lowerLeftHandCorner) : field.lowerLeftHandCorner != null)
+            return false;
+        if (upperRightHandCorner != null ? !upperRightHandCorner.equals(field.upperRightHandCorner) : field.upperRightHandCorner != null)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = lowerLeftHandCorner != null ? lowerLeftHandCorner.hashCode() : 0;
+        result = 31 * result + (upperRightHandCorner != null ? upperRightHandCorner.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Field{");
+        sb.append("lowerLeftHandCorner=").append(lowerLeftHandCorner);
+        sb.append(", upperRightHandCorner=").append(upperRightHandCorner);
+        sb.append('}');
+        return sb.toString();
+    }
 }

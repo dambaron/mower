@@ -11,14 +11,20 @@
 
     <bean id="mowerApp" class="org.dbaron.mower.application.MowerApp"/>
 
+    <alias name="fileConfigurationParser" alias="configurationParser"/>
     <bean id="fileConfigurationParser" class="org.dbaron.mower.parser.FileConfigurationParser">
         <constructor-arg name="orientationsDictionnary" ref="orientationsDictionnary"/>
         <constructor-arg name="movesDictionnary" ref="movesDictionnary"/>
     </bean>
 
-    <bean id="moveProviderService" class="org.dbaron.mower.service.MoveProviderServiceImpl"/>
+    <alias name="moveProviderServiceImpl" alias="moveProviderService"/>
+    <bean id="moveProviderServiceImpl" class="org.dbaron.mower.service.MoveProviderServiceImpl"/>
 
-    <bean id="pointProviderService" class="org.dbaron.mower.service.PointProviderServiceImpl"/>
+    <alias name="mowerServiceImpl" alias="mowerService"/>
+    <bean id="mowerServiceImpl" class="org.dbaron.mower.service.MowerServiceImpl"/>
 
-    <bean id="mowerService" class="org.dbaron.mower.service.MowerServiceImpl"/>
+    <alias name="pointProviderServiceImpl" alias="pointProviderService"/>
+    <bean id="pointProviderServiceImpl" class="org.dbaron.mower.service.PointProviderServiceImpl"/>
+
+    <bean id="positionValidator" class="org.dbaron.mower.validation.PositionValidator"/>
 </beans>

@@ -6,14 +6,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-//import org.junit.runner.RunWith;
-//import org.springframework.test.context.ContextConfiguration;
-//import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.File;
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(locations={"/spring/mower-spring-context-test.xml"})
 public class FileConfigurationParserTest {
 
     private static final ImmutableSet<String> ALLOWED_ORIENTATIONS = ImmutableSet.of("N", "S", "W", "E");

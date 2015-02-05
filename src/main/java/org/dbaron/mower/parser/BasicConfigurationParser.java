@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -57,6 +58,11 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
     @Override
     public Set<String> getMovesDictionnary() {
         return super.getMovesDictionnary();
+    }
+
+    @Override
+    public Configuration parseConfiguration(File file) {
+        throw new UnsupportedOperationException("Method should be overridden in subclass");
     }
 
     @Override

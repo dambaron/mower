@@ -13,6 +13,7 @@ public class Mower implements OrientationAware, PositionAware {
     private WayPoint initialWayPoint;
     private LinkedList<WayPoint> wayPoints;
     private LinkedList<Move> moveSequence;
+    private int skippedMoves = 0;
 
     public Mower() {
         this.initialWayPoint = new WayPoint();
@@ -63,14 +64,42 @@ public class Mower implements OrientationAware, PositionAware {
         this.moveSequence.addAll(moveSequence);
     }
 
-    @Override
-    public Orientation getOrientation() {
-        return null;
+    public int getSkippedMoves() {
+        return skippedMoves;
+    }
+
+    public void setSkippedMoves(int skippedMoves) {
+        this.skippedMoves = skippedMoves;
+    }
+
+    public String getDisplayablePath() {
+
+        if (getWayPoints() == null
+                || getWayPoints().isEmpty()) {
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (WayPoint wayPoint : getWayPoints()) {
+            sb.append("(")
+                    .append(wayPoint.getPosition().getX())
+                    .append(",")
+                    .append(wayPoint.getPosition().getY())
+                    .append(",")
+                    .append(wayPoint.getOrientation().getCode())
+                    .append(") -> ");
+        }
+        sb.append("(STOP)");
+        return sb.toString();
     }
 
     @Override
-    public Point updateOrientation(Orientation orientation) {
-        return null;
+    public Orientation getOrientation() {
+        if (wayPoints.isEmpty()) {
+            return initialWayPoint.getOrientation();
+        }
+
+        return this.wayPoints.getLast().getOrientation();
     }
 
     @Override
@@ -81,10 +110,5 @@ public class Mower implements OrientationAware, PositionAware {
         }
 
         return this.wayPoints.getLast().getPosition();
-    }
-
-    @Override
-    public Point updatePosition(Position position) {
-        return null;
     }
 }

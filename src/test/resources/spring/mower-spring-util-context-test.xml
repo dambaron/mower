@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <bean id="moveProviderService" class="org.dbaron.mower.service.MoveProviderServiceImpl"/>
+    <util:set id="orientationsDictionnary">
+        <value>#{T(org.dbaron.mower.model.reference.CardinalOrientation).N.code}</value>
+        <value>#{T(org.dbaron.mower.model.reference.CardinalOrientation).S.code}</value>
+        <value>#{T(org.dbaron.mower.model.reference.CardinalOrientation).W.code}</value>
+        <value>#{T(org.dbaron.mower.model.reference.CardinalOrientation).E.code}</value>
+    </util:set>
 
+    <util:set id="movesDictionnary">
+        <value>#{T(org.dbaron.mower.model.reference.CartesianTranslation).A.code}</value>
+        <value>#{T(org.dbaron.mower.model.reference.CartesianTranslation).R.code}</value>
+        <value>#{T(org.dbaron.mower.model.reference.CartesianRotation).G.code}</value>
+        <value>#{T(org.dbaron.mower.model.reference.CartesianRotation).D.code}</value>
+    </util:set>
 </beans>

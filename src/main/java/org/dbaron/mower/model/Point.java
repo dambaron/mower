@@ -53,4 +53,13 @@ public class Point {
         result = 31 * result + (orientation != null ? orientation.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Point{");
+        sb.append("position=").append(position);
+        sb.append(", orientation=").append(orientation);
+        sb.append('}');
+        return sb.toString();
+    }
 }

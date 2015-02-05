@@ -6,6 +6,4 @@ package org.dbaron.mower.model;
 public interface PositionAware {
 
     Position getPosition();
-
-    Point updatePosition(Position position);
 }

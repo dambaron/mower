@@ -7,6 +7,7 @@ import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.cli.PosixParser;
+import org.apache.commons.lang3.Validate;
 import org.dbaron.mower.model.Configuration;
 import org.dbaron.mower.model.Field;
 import org.dbaron.mower.model.Move;
@@ -15,7 +16,7 @@ import org.dbaron.mower.model.Orientation;
 import org.dbaron.mower.model.Point;
 import org.dbaron.mower.model.Position;
 import org.dbaron.mower.model.WayPoint;
-import org.dbaron.mower.parser.FileConfigurationParser;
+import org.dbaron.mower.parser.ConfigurationParser;
 import org.dbaron.mower.service.MowerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.File;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dbaron on 28/01/15.
@@ -39,10 +41,14 @@ public class MowerApp {
 
     //Services
     @Autowired
-    private FileConfigurationParser fileConfigurationParser;
+    private ConfigurationParser configurationParser;
 
     @Autowired
     private MowerService mowerService;
+
+    public MowerApp() {
+        //DO NOTHING
+    }
 
     public static void main(String[] args) {
 
@@ -60,10 +66,14 @@ public class MowerApp {
             if (line.hasOption("c")) {
 
                 String configurationFile = line.getOptionValue("c");
+
                 LOGGER.info("Launching mower(s)");
                 MowerApp mowerApp = (MowerApp) context.getBean("mowerApp");
                 mowerApp.launch(configurationFile);
+
                 LOGGER.info("Mower(s) stopped");
+                mowerApp.displayJourneys();
+
                 System.exit(0);
             }
         } catch (ParseException pe) {
@@ -99,37 +109,78 @@ public class MowerApp {
         LOGGER.info("usage: java MowerApp -c,--config <file>");
     }
 
-    public MowerApp() {
-        //DO NOTHING
+    public ConfigurationParser getConfigurationParser() {
+        return configurationParser;
     }
 
-    public void launch(String configurationFile) {
+    public void setConfigurationParser(ConfigurationParser configurationParser) {
+        this.configurationParser = configurationParser;
+    }
 
-        File mowersFile = new File(configurationFile);
-        if (!mowersFile.exists()) {
-            LOGGER.error("Configuration file {} doesn't exist", mowersFile);
+    public MowerService getMowerService() {
+        return mowerService;
+    }
+
+    public void setMowerService(MowerService mowerService) {
+        this.mowerService = mowerService;
+    }
+
+    public void launch(String pathToConfigurationFile) {
+        Validate.notNull(pathToConfigurationFile, "pathToConfigurationFile is required");
+
+        File configurationFile = new File(pathToConfigurationFile);
+        if (!configurationFile.exists()) {
+
+            LOGGER.error("Configuration file {} doesn't exist", configurationFile);
         } else {
-            Configuration configuration = fileConfigurationParser.parseConfiguration(mowersFile);
 
-            Field field = configuration.getField();
-            List<Point> startingPoints = configuration.getStartingPoints();
-            for (int index = 0; index < startingPoints.size(); index++) {
+            Configuration configuration = configurationParser.parseConfiguration(configurationFile);
+            launch(configuration);
+        }
+    }
 
-                Point startingPoint = startingPoints.get(index);
-                List<Move> moveSequence = configuration.getMoveSequences().get(index);
+    public void launch(Configuration configuration) {
+        Validate.notNull(configuration, "configuration is required");
 
-                final Position startingPosition = startingPoint.getPosition();
-                final Orientation startingOrientation = startingPoint.getOrientation();
+        Field field = configuration.getField();
+        List<Point> startingPoints = configuration.getStartingPoints();
+        for (int index = 0; index < startingPoints.size(); index++) {
 
-                WayPoint startingWayPoint = new WayPoint(startingPosition,
-                        startingOrientation);
+            Point startingPoint = startingPoints.get(index);
+            List<Move> moveSequence = configuration.getMoveSequences().get(index);
+
+            final Position startingPosition = startingPoint.getPosition();
+            final Orientation startingOrientation = startingPoint.getOrientation();
+
+            WayPoint startingWayPoint = new WayPoint(startingPosition,
+                    startingOrientation);
 
 
-                Mower mower = new Mower(startingWayPoint, moveSequence);
+            Mower mower = new Mower(startingWayPoint, moveSequence);
 
-                mowerService.registerField(field);
-                mowerService.registerMower(mower, field);
-                mowerService.mow(field, mower);
+            mowerService.registerField(field);
+            mowerService.registerMower(mower, field);
+            mowerService.mow(field, mower);
+        }
+    }
+
+    public void displayJourneys() {
+
+        Set<Field> fields = this.getMowerService().getRegisteredFields();
+        for (Field field : fields) {
+
+            Set<Mower> mowers = this.getMowerService().getRegisteredMowers(field);
+
+            LOGGER.info("Mowing results for {}", field);
+            for (Mower mower : mowers) {
+
+                LOGGER.info("One mower stopped at {}, {}",
+                        mower.getPosition(),
+                        mower.getOrientation());
+
+                LOGGER.info("The path was : {}", mower.getDisplayablePath());
+
+                LOGGER.info("Skipped moves : {}", mower.getSkippedMoves());
             }
         }
     }

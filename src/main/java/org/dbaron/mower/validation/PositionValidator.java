@@ -9,7 +9,7 @@ import org.dbaron.mower.model.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Created by dbaron on 28/01/15.
@@ -52,7 +52,9 @@ public class PositionValidator {
 
     }
 
-    public void validateIsFreePosition(Position position, Mower runningMower, List<Mower> mowers) {
+    public void validateIsFreePosition(Position position,
+                                       Mower runningMower,
+                                       Set<Mower> mowers) {
         Validate.notNull(position, "position is required");
         Validate.notNull(runningMower, "runningMower is required");
         Validate.notNull(mowers, "mowers is required");

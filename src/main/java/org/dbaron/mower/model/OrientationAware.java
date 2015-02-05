@@ -6,6 +6,4 @@ package org.dbaron.mower.model;
 public interface OrientationAware {
 
     Orientation getOrientation();
-
-    Point updateOrientation(Orientation orientation);
 }
