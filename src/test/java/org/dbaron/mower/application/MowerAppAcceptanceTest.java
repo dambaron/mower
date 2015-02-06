@@ -8,15 +8,15 @@ import org.dbaron.mower.service.MowerServiceImpl;
 import org.dbaron.mower.service.PointProviderServiceImpl;
 import org.dbaron.mower.validation.PositionValidator;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import java.util.Arrays;
 import java.util.List;
 
-
-public class MowerAppTest {
+/**
+ * Created by dbaron on 06/02/15.
+ */
+public class MowerAppAcceptanceTest {
 
     private static final ImmutableSet<String> ALLOWED_ORIENTATIONS = ImmutableSet.of("N", "S", "W", "E");
     private static final ImmutableSet<String> ALLOWED_MOVES = ImmutableSet.of("G", "D", "A");
@@ -29,9 +29,6 @@ public class MowerAppTest {
     private final MoveProviderServiceImpl moveProviderServiceImpl = new MoveProviderServiceImpl();
     private final MowerServiceImpl mowerServiceImpl = new MowerServiceImpl();
     private final MowerApp mowerApp = new MowerApp();
-
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
 
     @Before
     public void setUp() {
@@ -46,25 +43,13 @@ public class MowerAppTest {
     }
 
     @Test
-    public void testLaunchConfigurationFile() {
-
-    }
-
-    @Test
-    public void testLaunchConfigurationThrowsNullPointerExceptionWhenConfigurationIsNull() {
-
-        exception.expect(NullPointerException.class);
-        exception.expectMessage("configuration is required");
-        Configuration configuration = null;
-        mowerApp.launch(configuration);
-    }
-
-    @Test
     public void testLaunchConfiguration() {
 
-        List<String> unparsedInputs = Arrays.asList("1 1",
-                "0 0 N",
-                "AAGADDAAGADDAAGADDAAGADD");
+        List<String> unparsedInputs = Arrays.asList("5 5",
+                "1 2 N",
+                "GAGAGAGAA",
+                "3 3 E",
+                "AADAADADDA");
 
         Configuration configuration = basicConfigurationParser.parseConfiguration(unparsedInputs);
         mowerApp.launch(configuration);
