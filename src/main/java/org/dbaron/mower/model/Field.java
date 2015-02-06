@@ -21,17 +21,20 @@ public class Field {
 
     public Field(Position lowerLeftHandCorner, Position upperRightHandCorner) {
 
-        Validate.notNull(lowerLeftHandCorner);
-        Validate.notNull(upperRightHandCorner);
+        Validate.notNull(lowerLeftHandCorner, "lowerLeftHandCorner is required");
+        Validate.notNull(upperRightHandCorner, "upperRightHandCorner is required");
 
-        Validate.isTrue(lowerLeftHandCorner.getX() >= 0);
-        Validate.isTrue(lowerLeftHandCorner.getY() >= 0);
+        Validate.isTrue(lowerLeftHandCorner.getX() >= 0, "X coordinate for lower left hand corner is negative");
+        Validate.isTrue(lowerLeftHandCorner.getY() >= 0, "Y coordinate for lower left hand corner is negative");
 
-        Validate.isTrue(upperRightHandCorner.getX() >= 0);
-        Validate.isTrue(upperRightHandCorner.getY() >= 0);
+        Validate.isTrue(upperRightHandCorner.getX() >= 0, "X coordinate for upper right hand corner is negative");
+        Validate.isTrue(upperRightHandCorner.getY() >= 0, "Y coordinate for upper right hand corner is negative");
 
-        Validate.isTrue(upperRightHandCorner.getX() > lowerLeftHandCorner.getX());
-        Validate.isTrue(upperRightHandCorner.getY() > lowerLeftHandCorner.getY());
+        Validate.isTrue(upperRightHandCorner.getX() > lowerLeftHandCorner.getX(),
+                "X coordinate for upper right hand corner must be greater than X coordinate for lower left hand corner");
+
+        Validate.isTrue(upperRightHandCorner.getY() > lowerLeftHandCorner.getY(),
+                "Y coordinate for upper right hand corner must be greater than Y coordinate for lower left hand corner");
 
         this.lowerLeftHandCorner = lowerLeftHandCorner;
         this.upperRightHandCorner = upperRightHandCorner;

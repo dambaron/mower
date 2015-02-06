@@ -14,21 +14,25 @@ public class FileConfigurationParserTest {
     private static final ImmutableSet<String> ALLOWED_ORIENTATIONS = ImmutableSet.of("N", "S", "W", "E");
     private static final ImmutableSet<String> ALLOWED_MOVES = ImmutableSet.of("G", "D", "A");
 
-    private ClassLoader classLoader = this.getClass().getClassLoader();
+    private final ClassLoader classLoader = this.getClass().getClassLoader();
 
-    private FileConfigurationParser fileConfigurationParser =
+    private final FileConfigurationParser fileConfigurationParser =
             new FileConfigurationParser(ALLOWED_ORIENTATIONS, ALLOWED_MOVES);
+
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     @Before
     public void setUp() {
         fileConfigurationParser.setMoveProviderService(new MoveProviderServiceImpl());
     }
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testParseConfigurationThrowsIllegalArgumentExceptionForNullFile() {
+
+        exception.expect(NullPointerException.class);
+        exception.expectMessage("file is required");
+
         File file = null;
         fileConfigurationParser.parseConfiguration(file);
     }
@@ -36,8 +40,8 @@ public class FileConfigurationParserTest {
     @Test
     public void testParseConfigurationThrowsIllegalArgumentExceptionForEmptyFile() {
 
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Configuration should contain 3 elements at least");
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("Configuration should contain 3 elements at least");
 
         String path = classLoader.getResource("parser/emptyConfigurationFile.txt").getPath();
         File file = new File(path);
@@ -48,8 +52,8 @@ public class FileConfigurationParserTest {
     @Test
     public void testParseConfigurationThrowsIllegalArgumentExceptionForOneLineFile() {
 
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Configuration should contain 3 elements at least");
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("Configuration should contain 3 elements at least");
 
         String path = classLoader.getResource("parser/oneLineConfigurationFile.txt").getPath();
         File file = new File(path);
@@ -60,8 +64,8 @@ public class FileConfigurationParserTest {
     @Test
     public void testParseConfigurationThrowsIllegalArgumentExceptionForTwoLinesFile() {
 
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Configuration should contain 3 elements at least");
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("Configuration should contain 3 elements at least");
 
         String path = classLoader.getResource("parser/twoLinesConfigurationFile.txt").getPath();
         File file = new File(path);
@@ -72,8 +76,8 @@ public class FileConfigurationParserTest {
     @Test
     public void testParseConfigurationThrowsIllegalArgumentExceptionForEvenLinesFile() {
 
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("Configuration should contain an odd number of elements");
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("Configuration should contain an odd number of elements");
 
         String path = classLoader.getResource("parser/evenLinesConfigurationFile.txt").getPath();
         File file = new File(path);

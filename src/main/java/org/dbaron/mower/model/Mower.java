@@ -60,6 +60,8 @@ public class Mower implements OrientationAware, PositionAware {
     }
 
     public void setMoveSequence(List<Move> moveSequence) {
+        Validate.notNull(moveSequence, "moveSequence is required");
+
         this.moveSequence = new LinkedList<>();
         this.moveSequence.addAll(moveSequence);
     }
@@ -95,20 +97,24 @@ public class Mower implements OrientationAware, PositionAware {
 
     @Override
     public Orientation getOrientation() {
-        if (wayPoints.isEmpty()) {
-            return initialWayPoint.getOrientation();
+
+        if (wayPoints == null
+                || wayPoints.isEmpty()) {
+
+            return (initialWayPoint != null ? initialWayPoint.getOrientation() : null);
         }
 
-        return this.wayPoints.getLast().getOrientation();
+        return wayPoints.getLast().getOrientation();
     }
 
     @Override
     public Position getPosition() {
 
-        if (wayPoints.isEmpty()) {
-            return initialWayPoint.getPosition();
+        if (wayPoints == null
+                || wayPoints.isEmpty()) {
+            return initialWayPoint != null ? initialWayPoint.getPosition() : null;
         }
 
-        return this.wayPoints.getLast().getPosition();
+        return wayPoints.getLast().getPosition();
     }
 }

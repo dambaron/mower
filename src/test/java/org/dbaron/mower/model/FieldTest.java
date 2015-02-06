@@ -3,7 +3,9 @@ package org.dbaron.mower.model;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
@@ -17,13 +19,16 @@ public class FieldTest {
     private static final Position DEFAUT_LOWER_LEFT_HAND_CORNER = new Position(0, 0);
     private static final Position DEFAUT_UPPER_RIGHT_HAND_CORNER = new Position(2, 2);
 
-    private Table<Integer, Integer, Boolean> defaultMowingIndex = HashBasedTable.create();
-    private Table<Integer, Integer, Boolean> allPositionMowedIndex = HashBasedTable.create();
-    private Table<Integer, Integer, Boolean> noPositionMowedIndex = HashBasedTable.create();
-    private Table<Integer, Integer, Boolean> allButOnePositionMowedIndex = HashBasedTable.create();
+    private final Table<Integer, Integer, Boolean> defaultMowingIndex = HashBasedTable.create();
+    private final Table<Integer, Integer, Boolean> allPositionsMowedIndex = HashBasedTable.create();
+    private final Table<Integer, Integer, Boolean> noPositionMowedIndex = HashBasedTable.create();
+    private final Table<Integer, Integer, Boolean> allButOnePositionMowedIndex = HashBasedTable.create();
 
     @Spy
-    Field spyField = new Field(DEFAUT_LOWER_LEFT_HAND_CORNER, DEFAUT_UPPER_RIGHT_HAND_CORNER);
+    private Field spyField = new Field(DEFAUT_LOWER_LEFT_HAND_CORNER, DEFAUT_UPPER_RIGHT_HAND_CORNER);
+
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     @Before
     public void setUp() {
@@ -39,10 +44,10 @@ public class FieldTest {
         defaultMowingIndex.put(2, 1, Boolean.FALSE);
         defaultMowingIndex.put(2, 2, Boolean.TRUE);
 
-        allPositionMowedIndex.put(0, 0, Boolean.TRUE);
-        allPositionMowedIndex.put(0, 1, Boolean.TRUE);
-        allPositionMowedIndex.put(1, 0, Boolean.TRUE);
-        allPositionMowedIndex.put(1, 1, Boolean.TRUE);
+        allPositionsMowedIndex.put(0, 0, Boolean.TRUE);
+        allPositionsMowedIndex.put(0, 1, Boolean.TRUE);
+        allPositionsMowedIndex.put(1, 0, Boolean.TRUE);
+        allPositionsMowedIndex.put(1, 1, Boolean.TRUE);
 
         allButOnePositionMowedIndex.put(0, 0, Boolean.TRUE);
         allButOnePositionMowedIndex.put(0, 1, Boolean.TRUE);
@@ -55,29 +60,68 @@ public class FieldTest {
         noPositionMowedIndex.put(1, 1, Boolean.FALSE);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testConstructorThrowsNullPointerExceptionWhenLowerLeftHandCornerIsNull() {
+
+        exception.expect(NullPointerException.class);
+        exception.expectMessage("lowerLeftHandCorner is required");
         new Field(null, new Position());
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
+    public void testConstructorThrowsIllegalArgumentExceptionWhenLowerLeftHandCornerHasNegativeX() {
+
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("X coordinate for lower left hand corner is negative");
+        new Field(new Position(-1, 0), new Position(1, 1));
+    }
+
+    @Test
+    public void testConstructorThrowsIllegalArgumentExceptionWhenLowerLeftHandCornerHasNegativeY() {
+
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("Y coordinate for lower left hand corner is negative");
+        new Field(new Position(0, -1), new Position(1, 1));
+    }
+
+    @Test
     public void testConstructorThrowsNullPointerExceptionWhenUpperRightHandCornerIsNull() {
+
+        exception.expect(NullPointerException.class);
+        exception.expectMessage("upperRightHandCorner is required");
         new Field(new Position(), null);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
+    public void testConstructorThrowsIllegalArgumentExceptionWhenUpperRightHandCornerHasNegativeX() {
+
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("X coordinate for upper right hand corner is negative");
+        new Field(new Position(0, 0), new Position(-1, 1));
+    }
+
+    @Test
+    public void testConstructorThrowsIllegalArgumentExceptionWhenUpperRightHandCornerHasNegativeY() {
+
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("Y coordinate for upper right hand corner is negative");
+        new Field(new Position(0, 0), new Position(1, -1));
+    }
+
+    @Test
     public void testConstructorThrowsIllegalArgumentExceptionWhenCornersHaveSameX() {
+
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("X coordinate for upper right hand corner must be greater than X coordinate for lower left hand corner");
         new Field(new Position(0, 0), new Position(0, 1));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testConstructorThrowsIllegalArgumentExceptionWhenCornersHaveSameY() {
-        new Field(new Position(0, 0), new Position(1, 0));
-    }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testConstructorThrowsIllegalArgumentExceptionWhenCornersHaveSameXY() {
-        new Field(new Position(0, 0), new Position(0, 0));
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("Y coordinate for upper right hand corner must be greater than Y coordinate for lower left hand corner");
+        new Field(new Position(0, 0), new Position(1, 0));
     }
 
     @Test
@@ -111,7 +155,7 @@ public class FieldTest {
     @Test
     public void testIsMowedForAllPositionMowedIndex() {
 
-        when(spyField.getMowingIndex()).thenReturn(allPositionMowedIndex);
+        when(spyField.getMowingIndex()).thenReturn(allPositionsMowedIndex);
         assertThat(spyField.isMowed(), is(Boolean.TRUE));
     }
 

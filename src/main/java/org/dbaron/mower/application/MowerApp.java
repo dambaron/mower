@@ -26,6 +26,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.File;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 
 /**
@@ -144,9 +145,13 @@ public class MowerApp {
 
         Field field = configuration.getField();
         List<Point> startingPoints = configuration.getStartingPoints();
-        for (int index = 0; index < startingPoints.size(); index++) {
+        ListIterator<Point> listIterator = startingPoints.listIterator();
 
-            Point startingPoint = startingPoints.get(index);
+        int index;
+        while(listIterator.hasNext()) {
+
+            index = listIterator.nextIndex();
+            Point startingPoint = listIterator.next();
             List<Move> moveSequence = configuration.getMoveSequences().get(index);
 
             final Position startingPosition = startingPoint.getPosition();
@@ -154,7 +159,6 @@ public class MowerApp {
 
             WayPoint startingWayPoint = new WayPoint(startingPosition,
                     startingOrientation);
-
 
             Mower mower = new Mower(startingWayPoint, moveSequence);
 
