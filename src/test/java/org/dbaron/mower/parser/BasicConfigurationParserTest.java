@@ -34,7 +34,7 @@ public class BasicConfigurationParserTest {
     private static final Orientation ORIENTATION_W = new Orientation(CardinalOrientation.W.getCode());
     private static final Point POINT_10_42_W = new Point(POSITION_10_42, ORIENTATION_W);
 
-    private BasicConfigurationParser basicConfigurationParser =
+    private final BasicConfigurationParser basicConfigurationParser =
             new BasicConfigurationParser(ALLOWED_ORIENTATIONS, ALLOWED_MOVES);
 
     @Test

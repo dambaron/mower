@@ -8,8 +8,8 @@ public enum CartesianTranslation {
     A("A", "FORWARD"),
     R("R", "BACKWARD");
 
-    private String code;
-    private String label;
+    private final String code;
+    private final String label;
 
     public String getCode() {
         return code;

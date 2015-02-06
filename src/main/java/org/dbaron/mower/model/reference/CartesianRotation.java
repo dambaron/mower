@@ -8,8 +8,8 @@ public enum CartesianRotation {
     G("G", "LEFT"),
     D("D", "RIGHT");
 
-    private String code;
-    private String label;
+    private final String code;
+    private final String label;
 
     public String getCode() {
         return code;

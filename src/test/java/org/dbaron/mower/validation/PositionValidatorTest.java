@@ -42,7 +42,7 @@ public class PositionValidatorTest {
     private static final Field DEFAULT_FIELD = new Field(DEFAULT_LOWER_LEFT_HAND_CORNER,
             DEFAULT_UPPER_RIGHT_HAND_CORNER);
 
-    private PositionValidator positionValidator = new PositionValidator();
+    private final PositionValidator positionValidator = new PositionValidator();
 
     @Test(expected = NullPointerException.class)
     public void testValidateIsInsideFieldThrowsNullPointerExceptionWhenPositionIsNull() {

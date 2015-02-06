@@ -234,11 +234,6 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
                 throw new IllegalArgumentException("No suitable move found for " + moveElement);
             }
 
-            if (translation != null && rotation != null) {
-                LOGGER.error("Code {} applies to both translation and rotation", moveElement);
-                throw new IllegalArgumentException("Code " + moveElement + " applies to both translation and rotation");
-            }
-
             if (translation != null && rotation == null) {
                 LOGGER.debug("Adding {} to moves", translation);
                 moves.add(translation);
@@ -247,6 +242,11 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
             if (translation == null && rotation != null) {
                 LOGGER.debug("Adding {} to moves", rotation);
                 moves.add(rotation);
+            }
+
+            if (translation != null && rotation != null) {
+                LOGGER.error("Code {} applies to both translation and rotation", moveElement);
+                throw new IllegalArgumentException("Code " + moveElement + " applies to both translation and rotation");
             }
         }
 

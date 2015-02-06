@@ -30,8 +30,8 @@ public enum CardinalOrientation {
             CardinalOrientation.S,
             CardinalOrientation.W);
 
-    private String code;
-    private String label;
+    private final String code;
+    private final String label;
 
     CardinalOrientation(String code, String label) {
         this.code = code;
