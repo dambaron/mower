@@ -9,7 +9,9 @@ import org.dbaron.mower.model.Translation;
 import org.dbaron.mower.model.reference.CardinalOrientation;
 import org.dbaron.mower.model.reference.CartesianRotation;
 import org.dbaron.mower.model.reference.CartesianTranslation;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -38,13 +40,22 @@ public class PointProviderServiceImplTest {
 
     private final PointProviderServiceImpl pointProviderServiceImpl = new PointProviderServiceImpl();
 
-    @Test(expected = NullPointerException.class)
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
+
+    @Test
     public void testApplyMoveThrowsNullPointerExceptionWhenStartingPointIsNull() {
+
+        exception.expect(NullPointerException.class);
+        exception.expectMessage("startingPoint is required");
         pointProviderServiceImpl.applyMove(MOVE_A, null);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testApplyMoveThrowsNullPointerExceptionWhenMoveIsNull() {
+
+        exception.expect(NullPointerException.class);
+        exception.expectMessage("move is required");
         pointProviderServiceImpl.applyMove(null, POINT_1_1_N);
     }
 

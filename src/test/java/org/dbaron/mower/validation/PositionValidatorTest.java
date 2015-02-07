@@ -10,7 +10,9 @@ import org.dbaron.mower.model.Orientation;
 import org.dbaron.mower.model.Position;
 import org.dbaron.mower.model.WayPoint;
 import org.dbaron.mower.model.reference.CardinalOrientation;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -44,13 +46,22 @@ public class PositionValidatorTest {
 
     private final PositionValidator positionValidator = new PositionValidator();
 
-    @Test(expected = NullPointerException.class)
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
+
+    @Test
     public void testValidateIsInsideFieldThrowsNullPointerExceptionWhenPositionIsNull() {
+
+        exception.expect(NullPointerException.class);
+        exception.expectMessage("position is required");
         positionValidator.validateIsInsideField(null, DEFAULT_FIELD);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testValidateIsInsideFieldThrowsNullPointerExceptionWhenFieldIsNull() {
+
+        exception.expect(NullPointerException.class);
+        exception.expectMessage("field is required");
         positionValidator.validateIsInsideField(DEFAULT_POSITION, null);
     }
 
@@ -62,8 +73,7 @@ public class PositionValidatorTest {
                 new Position(1, 2),
                 new Position(2, 2),
                 new Position(2, 1),
-                new Position(2, 0)
-        );
+                new Position(2, 0));
 
         for (Position outOfFieldPosition : outOfFieldPositions.asList()) {
 
@@ -83,30 +93,38 @@ public class PositionValidatorTest {
                 new Position(0, 0),
                 new Position(0, 1),
                 new Position(1, 0),
-                new Position(1, 1)
-        );
+                new Position(1, 1));
 
         for (Position inFieldPosition : inFieldPositions.asList()) {
             positionValidator.validateIsInsideField(inFieldPosition, DEFAULT_FIELD);
         }
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testValidateIsFreePositionThrowsNullPointerExceptionWhenPositionIsNull() {
+
+        exception.expect(NullPointerException.class);
+        exception.expectMessage("position is required");
         positionValidator.validateIsFreePosition(null,
                 new Mower(),
                 new LinkedHashSet<Mower>());
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testValidateIsFreePositionThrowsNullPointerExceptionWhenRunningMowerIsNull() {
+
+        exception.expect(NullPointerException.class);
+        exception.expectMessage("runningMower is required");
         positionValidator.validateIsFreePosition(new Position(),
                 null,
                 new LinkedHashSet<Mower>());
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void testValidateIsFreePositionThrowsNullPointerExceptionWhenMowersIsNull() {
+
+        exception.expect(NullPointerException.class);
+        exception.expectMessage("mowers is required");
         positionValidator.validateIsFreePosition(new Position(),
                 new Mower(),
                 null);
