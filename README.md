@@ -5,7 +5,7 @@ How to mow your lawn ?
 
 * With the command line as a jar :
 
-> java -jar mower-app-1.0.0.jar MowerApp -f /the/path/to/your/file.txt
+> java -jar mower-app-1.0.0.jar MowerApp -c /the/path/to/your/file.txt
 
 * Within your IDE as a jUnit test :
 
