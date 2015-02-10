@@ -6,13 +6,6 @@ package org.dbaron.mower.exception;
 public class MowingException extends RuntimeException {
 
     /**
-     * Constructs a <code>MowingException</code> with no detail message.
-     */
-    public MowingException() {
-        super();
-    }
-
-    /**
      * Constructs a <code>MowingException</code> with the specified
      * detail message.
      *

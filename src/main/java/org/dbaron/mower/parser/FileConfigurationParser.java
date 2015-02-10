@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -42,7 +41,7 @@ public class FileConfigurationParser extends BasicConfigurationParser implements
     public Configuration parseConfiguration(File file) {
         Validate.notNull(file, "file is required");
 
-        List<String> lines = new LinkedList<>();
+        List<String> lines;
         try {
             lines = Files.readLines(file, Charset.defaultCharset());
         } catch (IOException ioe) {

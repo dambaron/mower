@@ -19,29 +19,27 @@ public class MoveProviderServiceImpl implements MoveProviderService {
     public Translation getTranslation(String moveCode) {
         Validate.notBlank(moveCode, "moveCode is blank");
 
-        Translation translation = null;
         try {
             CartesianTranslation ct = CartesianTranslation.valueOf(moveCode);
-            translation = new Translation(ct.getCode());
+            return new Translation(ct.getCode());
         } catch (IllegalArgumentException iae) {
-            //LOGGER.debug("Code {} was not found in the translations referential. Returning null",
-            //        moveCode);
+            LOGGER.error("Code {} was not found in the translations referential. Returning null",
+                    moveCode);
+            return null;
         }
-        return translation;
     }
 
     @Override
     public Rotation getRotation(String moveCode) {
         Validate.notBlank(moveCode, "moveCode is blank");
 
-        Rotation rotation = null;
         try {
             CartesianRotation cartesianRotation = CartesianRotation.valueOf(moveCode);
-            rotation = new Rotation(cartesianRotation.getCode());
+            return new Rotation(cartesianRotation.getCode());
         } catch (IllegalArgumentException iae) {
-            //LOGGER.debug("Code {} was not found in the rotations referential. Returning null",
-            //        moveCode);
+            LOGGER.error("Code {} was not found in the rotations referential. Returning null",
+                    moveCode);
+            return null;
         }
-        return rotation;
     }
 }

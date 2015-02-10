@@ -60,14 +60,6 @@ public class MowerServiceImpl implements MowerService {
     }
 
     @Override
-    public void unregisterField(Field field) {
-
-        if (mowersByField.containsKey(field)) {
-            mowersByField.remove(field);
-        }
-    }
-
-    @Override
     public Set<Field> getRegisteredFields() {
         return (mowersByField != null ? mowersByField.keySet() : null);
     }
@@ -88,26 +80,8 @@ public class MowerServiceImpl implements MowerService {
     }
 
     @Override
-    public void unregisterMower(Mower mower, Field field) {
-
-        if (mowersByField.containsKey(field)) {
-
-            Set<Mower> registeredMowers = mowersByField.get(field);
-            if (registeredMowers.contains(mower)) {
-                registeredMowers.remove(mower);
-                mowersByField.put(field, registeredMowers);
-            }
-        }
-    }
-
-    @Override
     public Set<Mower> getRegisteredMowers(Field Field) {
         return (mowersByField != null ? mowersByField.get(Field) : null);
-    }
-
-    @Override
-    public Map<Field, Set<Mower>> getRegisteredMowersByField() {
-        return mowersByField;
     }
 
     @Override
@@ -131,28 +105,23 @@ public class MowerServiceImpl implements MowerService {
 
             // First validate starting point
             Point currentPoint = new Point(mower.getPosition(), mower.getOrientation());
+            Position currentPosition = currentPoint.getPosition();
             try {
-
-                Position currentPosition = currentPoint.getPosition();
                 positionValidator.validateIsInsideField(currentPosition, field);
                 positionValidator.validateIsFreePosition(currentPosition, mower, mowersInField);
 
             } catch (OutOfFieldException oofe) {
 
                 mower.setSkippedMoves(mower.getMoveSequence().size());
-                LOGGER.error("Mower can't start. Starting position {} is outside the field",
+                LOGGER.error("Mower can't start. {} is outside the field",
                         currentPoint,
                         oofe);
-                return;
-
             } catch (OccupiedPositionException ope) {
 
                 mower.setSkippedMoves(mower.getMoveSequence().size());
-                LOGGER.error("Mower can't start. Starting position {} is already occupied",
+                LOGGER.error("Mower can't start. {} is already occupied",
                         currentPoint,
                         ope);
-                return;
-
             }
 
             // Second retrieve next point move after move

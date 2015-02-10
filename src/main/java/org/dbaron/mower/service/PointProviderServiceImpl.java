@@ -86,7 +86,7 @@ public class PointProviderServiceImpl implements PointProviderService {
         int nextX = currentX;
         int nextY = currentY;
 
-        CardinalOrientation cardinalOrientation = null;
+        CardinalOrientation cardinalOrientation;
         try {
             cardinalOrientation = CardinalOrientation.valueOf(currentOrientation.getCode());
         } catch (IllegalArgumentException iae) {

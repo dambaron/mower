@@ -6,13 +6,6 @@ package org.dbaron.mower.exception;
 public class OccupiedPositionException extends MowingException {
 
     /**
-     * Constructs an <code>OccupiedPositionException</code> with no detail message.
-     */
-    public OccupiedPositionException() {
-        super();
-    }
-
-    /**
      * Constructs an <code>OccupiedPositionException</code> with the specified
      * detail message.
      *

@@ -6,13 +6,6 @@ package org.dbaron.mower.exception;
 public class OutOfFieldException extends MowingException {
 
     /**
-     * Constructs an <code>OutOfFieldException</code> with no detail message.
-     */
-    public OutOfFieldException() {
-        super();
-    }
-
-    /**
      * Constructs an <code>OutOfFieldException</code> with the specified
      * detail message.
      *
