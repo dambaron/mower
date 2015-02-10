@@ -62,7 +62,7 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
 
     @Override
     public Configuration parseConfiguration(File file) {
-        throw new UnsupportedOperationException("Method should be overridden in subclass");
+        throw new UnsupportedOperationException("Method should be implemented in subclass");
     }
 
     @Override
@@ -125,18 +125,18 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
         return moves;
     }
 
-    private void validateNumericValue(String value) {
+    protected final void validateNumericValue(String value) {
         if (!StringUtils.isNumeric(value)) {
             LOGGER.error("Numeric value expected. Found {}", value);
             throw new IllegalArgumentException("Numeric value expected. Found " + value);
         }
     }
 
-    private void validateDictionnaryValue(String value, Set<String> dictionnary) {
+    protected final void validateDictionnaryValue(String value, Set<String> dictionnary) {
         validateDictionnaryValues(Arrays.asList(value), dictionnary);
     }
 
-    private void validateDictionnaryValues(List<String> values, Set<String> dictionnary) {
+    protected final void validateDictionnaryValues(List<String> values, Set<String> dictionnary) {
         Validate.notNull(values);
         Validate.notNull(dictionnary);
 
@@ -234,6 +234,11 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
                 throw new IllegalArgumentException("No suitable move found for " + moveElement);
             }
 
+            if (translation != null && rotation != null) {
+                LOGGER.error("Code {} applies to both translation and rotation", moveElement);
+                throw new IllegalArgumentException("Code " + moveElement + " applies to both translation and rotation");
+            }
+
             if (translation != null && rotation == null) {
                 LOGGER.debug("Adding {} to moves", translation);
                 moves.add(translation);
@@ -242,11 +247,6 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
             if (translation == null && rotation != null) {
                 LOGGER.debug("Adding {} to moves", rotation);
                 moves.add(rotation);
-            }
-
-            if (translation != null && rotation != null) {
-                LOGGER.error("Code {} applies to both translation and rotation", moveElement);
-                throw new IllegalArgumentException("Code " + moveElement + " applies to both translation and rotation");
             }
         }
 

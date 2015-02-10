@@ -87,7 +87,7 @@ public class MowerApp {
     }
 
     /**
-     * @return
+     *
      */
     protected static void initOptions() {
 
