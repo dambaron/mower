@@ -46,11 +46,6 @@ public class MowerAppTest {
     }
 
     @Test
-    public void testLaunchConfigurationFile() {
-
-    }
-
-    @Test
     public void testLaunchConfigurationThrowsNullPointerExceptionWhenConfigurationIsNull() {
 
         exception.expect(NullPointerException.class);

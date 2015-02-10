@@ -39,9 +39,4 @@ public class CardinalOrientationTest {
                 is(CardinalOrientation.N));
 
     }
-
-    @Test
-    public void testGetNextCardinalOrientationFromList() {
-
-    }
 }

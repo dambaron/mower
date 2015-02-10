@@ -6,9 +6,11 @@ import org.dbaron.mower.model.Orientation;
 import org.dbaron.mower.model.Point;
 import org.dbaron.mower.model.Position;
 import org.dbaron.mower.model.reference.CardinalOrientation;
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -37,25 +39,17 @@ public class BasicConfigurationParserTest {
     private final BasicConfigurationParser basicConfigurationParser =
             new BasicConfigurationParser(ALLOWED_ORIENTATIONS, ALLOWED_MOVES);
 
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
+
     @Test
-    @Ignore
     public void testParseConfigurationFromList() {
-        //basicConfigurationParser.parseConfiguration();
-    }
 
-    @Test
-    public void testParseField() {
+        exception.expect(UnsupportedOperationException.class);
+        exception.expectMessage("Method should be implemented in subclass");
 
-    }
-
-    @Test
-    public void testParsePoint() {
-
-    }
-
-    @Test
-    public void testParseMoves() {
-
+        File file = new File("");
+        basicConfigurationParser.parseConfiguration(file);
     }
 
     @Test
@@ -77,6 +71,26 @@ public class BasicConfigurationParserTest {
     }
 
     @Test
+    public void testValidateFieldThrowsIllegalArgumentExceptionWhenFieldHasLessThanTwoElement() {
+
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("Wrong number of elements in field definition");
+
+        List<String> fieldElements = Arrays.asList("5");
+        basicConfigurationParser.validateField(fieldElements);
+    }
+
+    @Test
+    public void testValidateFieldThrowsIllegalArgumentExceptionWhenFieldHasMoreThanTwoElements() {
+
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("Wrong number of elements in field definition");
+
+        List<String> fieldElements = Arrays.asList("5", "5", "5");
+        basicConfigurationParser.validateField(fieldElements);
+    }
+
+    @Test
     public void testValidateField() {
 
         List<String> fieldElements = Arrays.asList("5", "5");
@@ -84,8 +98,30 @@ public class BasicConfigurationParserTest {
     }
 
     @Test
+    public void testValidatePointThrowsIllegalArgumentExceptionWhenPointHasLessThanThreeElements() {
+
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("Wrong number of elements in point definition");
+
+        List<String> pointElements = Arrays.asList("1", "2");
+        basicConfigurationParser.validatePoint(pointElements);
+    }
+
+    @Test
+    public void testValidatePointThrowsIllegalArgumentExceptionWhenPointHasMoreThanThreeElements() {
+
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("Wrong number of elements in point definition");
+
+        List<String> pointElements = Arrays.asList("1", "2", "N", "N");
+        basicConfigurationParser.validatePoint(pointElements);
+    }
+
+    @Test
     public void testValidatePoint() {
 
+        List<String> pointElements = Arrays.asList("1", "2", "N");
+        basicConfigurationParser.validatePoint(pointElements);
     }
 
     @Test
@@ -161,10 +197,5 @@ public class BasicConfigurationParserTest {
 
         assertThat(point.getOrientation(), is(notNullValue()));
         assertThat(point.getOrientation(), is(POINT_10_42_W.getOrientation()));
-    }
-
-    @Test
-    public void testBuildMoves() {
-
     }
 }
