@@ -14,10 +14,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 import static junit.framework.Assert.fail;
 import static org.hamcrest.CoreMatchers.instanceOf;
@@ -107,7 +105,7 @@ public class PositionValidatorTest {
         exception.expectMessage("position is required");
         positionValidator.validateIsFreePosition(null,
                 new Mower(),
-                new LinkedHashSet<Mower>());
+                new LinkedList<Mower>());
     }
 
     @Test
@@ -117,7 +115,7 @@ public class PositionValidatorTest {
         exception.expectMessage("runningMower is required");
         positionValidator.validateIsFreePosition(new Position(),
                 null,
-                new LinkedHashSet<Mower>());
+                new LinkedList<Mower>());
     }
 
     @Test
@@ -135,7 +133,7 @@ public class PositionValidatorTest {
 
         Mower runningMower = new Mower();
 
-        Set<Mower> mowersOnTheDiagonal = new LinkedHashSet<>();
+        List<Mower> mowersOnTheDiagonal = new LinkedList<>();
         mowersOnTheDiagonal.add(new Mower(WAY_POINT_0_0_N));
         mowersOnTheDiagonal.add(new Mower(WAY_POINT_1_1_N));
 

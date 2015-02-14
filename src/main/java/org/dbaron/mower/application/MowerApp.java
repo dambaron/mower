@@ -87,7 +87,7 @@ public class MowerApp {
     }
 
     /**
-     *
+     * Init CLI options
      */
     protected static void initOptions() {
 
@@ -104,6 +104,9 @@ public class MowerApp {
         appOptions.addOption(config);
     }
 
+    /**
+     * Display how to use the MowerApp
+     */
     protected static void usage() {
 
         // Generate help statement
@@ -126,6 +129,10 @@ public class MowerApp {
         this.mowerService = mowerService;
     }
 
+    /**
+     * Launch a mow based on a given gonfiguration file
+     * @param pathToConfigurationFile - the path to the configuration file
+     */
     public void launch(String pathToConfigurationFile) {
         Validate.notNull(pathToConfigurationFile, "pathToConfigurationFile is required");
 
@@ -140,6 +147,10 @@ public class MowerApp {
         }
     }
 
+    /**
+     * Launch a mow with the given configuration
+     * @param configuration - the configuration the mowers will use
+     */
     public void launch(Configuration configuration) {
         Validate.notNull(configuration, "configuration is required");
 
@@ -168,12 +179,15 @@ public class MowerApp {
         }
     }
 
+    /**
+     * Display the journeys of all mowers on all fields
+     */
     public void displayJourneys() {
 
         Set<Field> fields = this.getMowerService().getRegisteredFields();
         for (Field field : fields) {
 
-            Set<Mower> mowers = this.getMowerService().getRegisteredMowers(field);
+            List<Mower> mowers = this.getMowerService().getRegisteredMowers(field);
 
             LOGGER.info("Mowing results for {}", field);
             for (Mower mower : mowers) {

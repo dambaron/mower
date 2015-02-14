@@ -38,6 +38,7 @@ public class FileConfigurationParser extends BasicConfigurationParser implements
         this.file = file;
     }
 
+    @Override
     public Configuration parseConfiguration(File file) {
         Validate.notNull(file, "file is required");
 

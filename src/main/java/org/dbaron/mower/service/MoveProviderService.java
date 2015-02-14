@@ -8,7 +8,17 @@ import org.dbaron.mower.model.Translation;
  */
 public interface MoveProviderService {
 
+    /**
+     * Builds a translation object from string
+     * @param moveCode
+     * @return
+     */
     Translation getTranslation(String moveCode);
 
+    /**
+     * Builds a rotation object from string
+     * @param moveCode
+     * @return
+     */
     Rotation getRotation(String moveCode);
 }

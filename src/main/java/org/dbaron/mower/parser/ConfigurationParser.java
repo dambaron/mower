@@ -18,7 +18,18 @@ public interface ConfigurationParser {
 
     Set<String> getMovesDictionnary();
 
+    /**
+     * Parse configuration from strings
+     * @param configurationElements - the elements to parse
+     * @return
+     */
     Configuration parseConfiguration(List<String> configurationElements);
+
+    /**
+     * Parse configuration from a given file
+     * @param file - the configuration file to parse
+     * @return
+     */
     Configuration parseConfiguration(File file);
 
     List<String> parseField(String fieldDefinition);

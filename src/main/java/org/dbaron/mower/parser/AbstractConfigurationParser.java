@@ -16,6 +16,12 @@ public abstract class AbstractConfigurationParser {
         //DO NOTHING
     }
 
+    /**
+     * Builds a configuration parser with a dictionnary for allowed orientations
+     * and another dictionnary for allowed moves
+     * @param orientationsDictionnary - a dictionnary for allowed orientations
+     * @param movesDictionnary - a dictionnary for allowed moves
+     */
     public AbstractConfigurationParser(Set<String> orientationsDictionnary,
                                        Set<String> movesDictionnary) {
 

@@ -9,7 +9,7 @@ import org.dbaron.mower.model.Position;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by dbaron on 28/01/15.
@@ -54,7 +54,7 @@ public class PositionValidator {
 
     public void validateIsFreePosition(Position position,
                                        Mower runningMower,
-                                       Set<Mower> mowers) {
+                                       List<Mower> mowers) {
         Validate.notNull(position, "position is required");
         Validate.notNull(runningMower, "runningMower is required");
         Validate.notNull(mowers, "mowers is required");
@@ -64,7 +64,6 @@ public class PositionValidator {
             if (!runningMower.equals(mower)) {
 
                 Position mowerPosition = mower.getPosition();
-
                 if (position.equals(mowerPosition)) {
                     LOGGER.error("{} is occupied", position);
                     throw new OccupiedPositionException(position + " is occupied");

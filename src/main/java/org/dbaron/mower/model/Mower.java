@@ -21,6 +21,10 @@ public class Mower implements OrientationAware, PositionAware {
         this.moveSequence = new LinkedList<>();
     }
 
+    /**
+     * Builds a Mower instance at a given stating point
+     * @param initialWayPoint - the starting point for the mower
+     */
     public Mower(WayPoint initialWayPoint) {
 
         Validate.notNull(initialWayPoint, "initialWayPoint is required");
@@ -33,6 +37,12 @@ public class Mower implements OrientationAware, PositionAware {
         this.moveSequence = new LinkedList<>();
     }
 
+    /**
+     * Builds a Mower instance at a given stating point
+     * with a given move sequence to follow
+     * @param initialWayPoint - the starting point for the mower
+     * @param moveSequence - the move sequence to follow
+     */
     public Mower(WayPoint initialWayPoint, List<Move> moveSequence) {
 
         Validate.notNull(initialWayPoint, "initialWayPoint is required");
@@ -74,6 +84,10 @@ public class Mower implements OrientationAware, PositionAware {
         this.skippedMoves = skippedMoves;
     }
 
+    /**
+     * Displays a human-readable path
+     * @return the path the mower followed
+     */
     public String getDisplayablePath() {
 
         if (getWayPoints() == null

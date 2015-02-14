@@ -46,6 +46,12 @@ public enum CardinalOrientation {
         return label;
     }
 
+    /**
+     * Defines the next cardinal orientation after a cardinal rotation is applied
+     * to the current cardinal orientation
+     * @param cartesianRotation the cartesian rotation to apply
+     * @return a cardinal orientation
+     */
     public CardinalOrientation getNextCardinalOrientation(String cartesianRotation) {
         Validate.notNull(cartesianRotation, "cartesianRotation is required");
 
@@ -66,7 +72,12 @@ public enum CardinalOrientation {
         }
     }
 
-    protected final CardinalOrientation getNextCardinalOrientation(ImmutableList<CardinalOrientation> cardinalOrientations) {
+    /**
+     * Defines the next cardinal orientation based upon current orientation and a list of transitions
+     * @param cardinalOrientations the list of allowed orientations
+     * @return
+     */
+    private final CardinalOrientation getNextCardinalOrientation(ImmutableList<CardinalOrientation> cardinalOrientations) {
         Validate.notNull(cardinalOrientations, "cardinalOrientations is required");
 
         CardinalOrientation nextCardinalOrientation = null;

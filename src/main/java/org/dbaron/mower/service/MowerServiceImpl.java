@@ -16,7 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
-import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,7 +34,7 @@ public class MowerServiceImpl implements MowerService {
     @Autowired
     private PointProviderService pointProviderService;
 
-    private Map<Field, Set<Mower>> mowersByField = new HashMap<>();
+    private Map<Field, List<Mower>> mowersByField = new HashMap<>();
 
     public PositionValidator getPositionValidator() {
         return positionValidator;
@@ -55,7 +56,7 @@ public class MowerServiceImpl implements MowerService {
     public void registerField(Field field) {
 
         if (!mowersByField.containsKey(field)) {
-            mowersByField.put(field, new LinkedHashSet<Mower>());
+            mowersByField.put(field, new LinkedList<Mower>());
         }
     }
 
@@ -71,23 +72,23 @@ public class MowerServiceImpl implements MowerService {
             registerField(field);
         }
 
-        Set<Mower> registeredMowers = mowersByField.get(field);
+        List<Mower> registeredMowers = mowersByField.get(field);
         if (registeredMowers == null) {
-            registeredMowers = new LinkedHashSet<>();
+            registeredMowers = new LinkedList<>();
         }
         registeredMowers.add(mower);
         mowersByField.put(field, registeredMowers);
     }
 
     @Override
-    public Set<Mower> getRegisteredMowers(Field Field) {
+    public List<Mower> getRegisteredMowers(Field Field) {
         return (mowersByField != null ? mowersByField.get(Field) : null);
     }
 
     @Override
     public void mow(Field field) {
 
-        Set<Mower> mowers = mowersByField.get(field);
+        List<Mower> mowers = mowersByField.get(field);
         if (mowers != null) {
             for (Mower mower : mowers) {
                 mow(field, mower);
@@ -100,7 +101,7 @@ public class MowerServiceImpl implements MowerService {
         Validate.notNull(field, "field is required");
         Validate.notNull(mower, "mower is required");
 
-        Set<Mower> mowersInField = mowersByField.get(field);
+        List<Mower> mowersInField = mowersByField.get(field);
         for (Move move : mower.getMoveSequence()) {
 
             // First validate starting point
@@ -112,12 +113,14 @@ public class MowerServiceImpl implements MowerService {
 
             } catch (OutOfFieldException oofe) {
 
+                //Starting point lands out of field
                 mower.setSkippedMoves(mower.getMoveSequence().size());
                 LOGGER.error("Mower can't start. {} is outside the field",
                         currentPoint,
                         oofe);
             } catch (OccupiedPositionException ope) {
 
+                //Starting point is already occupied by another mower
                 mower.setSkippedMoves(mower.getMoveSequence().size());
                 LOGGER.error("Mower can't start. {} is already occupied",
                         currentPoint,
@@ -137,12 +140,14 @@ public class MowerServiceImpl implements MowerService {
 
             } catch (OutOfFieldException oofe) {
 
+                //The next move lands out of field
                 mower.setSkippedMoves(mower.getSkippedMoves() + 1);
                 LOGGER.error("{} is not mowable. It is out of field. Waiting for the next valid move",
                         nextPosition,
                         oofe);
             } catch (OccupiedPositionException ope) {
 
+                //The next move lands on an occupied position
                 mower.setSkippedMoves(mower.getSkippedMoves() + 1);
                 LOGGER.error("{} is not mowable. It is already occupied. Waiting for the next valid move",
                         nextPosition,

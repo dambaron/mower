@@ -55,7 +55,7 @@ public class MowerAppTest {
     }
 
     @Test
-    public void testLaunchConfiguration() {
+    public void testLaunchConfigurationWithOutOfFieldMoves() {
 
         List<String> unparsedInputs = Arrays.asList("1 1",
                 "0 0 N",

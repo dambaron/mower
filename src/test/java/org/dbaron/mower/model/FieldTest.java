@@ -34,6 +34,7 @@ public class FieldTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
+        //Creating diagonal mowing index
         defaultMowingIndex.put(0, 0, Boolean.TRUE);
         defaultMowingIndex.put(0, 1, Boolean.FALSE);
         defaultMowingIndex.put(0, 2, Boolean.FALSE);
@@ -44,16 +45,19 @@ public class FieldTest {
         defaultMowingIndex.put(2, 1, Boolean.FALSE);
         defaultMowingIndex.put(2, 2, Boolean.TRUE);
 
+        //Creating mowing index where all positions are mowned
         allPositionsMowedIndex.put(0, 0, Boolean.TRUE);
         allPositionsMowedIndex.put(0, 1, Boolean.TRUE);
         allPositionsMowedIndex.put(1, 0, Boolean.TRUE);
         allPositionsMowedIndex.put(1, 1, Boolean.TRUE);
 
+        //Creating mowing index where all positions are mowned but one
         allButOnePositionMowedIndex.put(0, 0, Boolean.TRUE);
         allButOnePositionMowedIndex.put(0, 1, Boolean.TRUE);
         allButOnePositionMowedIndex.put(1, 0, Boolean.FALSE);
         allButOnePositionMowedIndex.put(1, 1, Boolean.TRUE);
 
+        //Creating mowing index where no position is mowned
         noPositionMowedIndex.put(0, 0, Boolean.FALSE);
         noPositionMowedIndex.put(0, 1, Boolean.FALSE);
         noPositionMowedIndex.put(1, 0, Boolean.FALSE);

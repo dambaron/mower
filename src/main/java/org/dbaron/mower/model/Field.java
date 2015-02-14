@@ -19,6 +19,12 @@ public class Field {
         this.upperRightHandCorner = null;
     }
 
+    /**
+     * Builds a Field instance based upon the lower left hand corner position
+     * and the uper right hand corner position
+     * @param lowerLeftHandCorner - the lower left hand corner cartesian position
+     * @param upperRightHandCorner - the upper right hand corner cartesian position
+     */
     public Field(Position lowerLeftHandCorner, Position upperRightHandCorner) {
 
         Validate.notNull(lowerLeftHandCorner, "lowerLeftHandCorner is required");
@@ -65,10 +71,20 @@ public class Field {
         return mowingIndex;
     }
 
+    /**
+     * Determines if a field is mowed
+     * @return true if all positions inside the field are mowed
+     */
     public boolean isMowed() {
         return getMowingIndex() != null && !getMowingIndex().containsValue(Boolean.FALSE);
     }
 
+    /**
+     * Determines if a position is mowed inside a field
+     * @param x the cartesian x coordinate
+     * @param y the cartesian y coordinate
+     * @return true if the given position is mowed
+     */
     public boolean isMowed(int x, int y) {
         return getMowingIndex() != null && getMowingIndex().get(x, y);
     }
