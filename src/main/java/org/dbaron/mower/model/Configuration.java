@@ -6,11 +6,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * A configuration
  * Created by dbaron on 29/01/15.
  */
 public class Configuration {
 
-    private Field field;
+    private final Field field;
 
     private List<Point> startingPoints = new LinkedList<>();
 

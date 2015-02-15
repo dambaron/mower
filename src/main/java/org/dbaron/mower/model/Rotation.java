@@ -1,6 +1,7 @@
 package org.dbaron.mower.model;
 
 /**
+ * A subclass of move dealing with orientations
  * Created by dbaron on 01/02/15.
  */
 public class Rotation extends Move {

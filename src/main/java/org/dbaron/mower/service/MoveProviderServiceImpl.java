@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * An implementation of the MowerProviderService
  * Created by dbaron on 01/02/15.
  */
 public class MoveProviderServiceImpl implements MoveProviderService {

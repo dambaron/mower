@@ -50,8 +50,7 @@ public class MowerAppTest {
 
         exception.expect(NullPointerException.class);
         exception.expectMessage("configuration is required");
-        Configuration configuration = null;
-        mowerApp.launch(configuration);
+        mowerApp.launch((Configuration) null);
     }
 
     @Test

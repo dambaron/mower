@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * An implementation of the MowerService
  * Created by dbaron on 28/01/15.
  */
 public class MowerServiceImpl implements MowerService {

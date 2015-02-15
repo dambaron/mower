@@ -14,21 +14,21 @@ import java.util.Set;
  */
 public interface ConfigurationParser {
 
-    Set<String> getOrientationsDictionnary();
+    Set<String> getOrientationsDictionary();
 
-    Set<String> getMovesDictionnary();
+    Set<String> getMovesDictionary();
 
     /**
      * Parse configuration from strings
      * @param configurationElements - the elements to parse
-     * @return
+     * @return a configuration
      */
     Configuration parseConfiguration(List<String> configurationElements);
 
     /**
      * Parse configuration from a given file
      * @param file - the configuration file to parse
-     * @return
+     * @return a configuration
      */
     Configuration parseConfiguration(File file);
 

@@ -1,6 +1,7 @@
 package org.dbaron.mower.model.reference;
 
 /**
+ * A translation in a cartesian coordinate system
  * Created by dbaron on 29/01/15.
  */
 public enum CartesianTranslation {

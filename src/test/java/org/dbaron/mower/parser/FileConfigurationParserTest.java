@@ -33,8 +33,7 @@ public class FileConfigurationParserTest {
         exception.expect(NullPointerException.class);
         exception.expectMessage("file is required");
 
-        File file = null;
-        fileConfigurationParser.parseConfiguration(file);
+        fileConfigurationParser.parseConfiguration((File) null);
     }
 
     @Test

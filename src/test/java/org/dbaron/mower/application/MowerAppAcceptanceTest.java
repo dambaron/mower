@@ -150,7 +150,7 @@ public class MowerAppAcceptanceTest {
         for (Mower registeredMower : registeredMowers) {
             assertThat(registeredMower, is(notNullValue()));
 
-            //No moves should have been skipped during mowning
+            //No moves should have been skipped during mowing
             assertThat(registeredMower.getSkippedMoves(), is(0));
 
             final WayPoint initialWayPoint = registeredMower.getInitialWayPoint();

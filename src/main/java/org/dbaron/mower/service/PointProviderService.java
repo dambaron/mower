@@ -6,6 +6,7 @@ import org.dbaron.mower.model.Rotation;
 import org.dbaron.mower.model.Translation;
 
 /**
+ * A service applying moves to point instances
  * Created by dbaron on 27/01/15.
  */
 public interface PointProviderService {

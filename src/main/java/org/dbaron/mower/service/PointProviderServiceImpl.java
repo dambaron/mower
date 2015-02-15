@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 
 /**
+ * An implementation of the PointProviderService
  * Created by dbaron on 27/01/15.
  */
 public class PointProviderServiceImpl implements PointProviderService {

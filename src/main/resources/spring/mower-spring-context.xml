@@ -13,8 +13,8 @@
 
     <alias name="fileConfigurationParser" alias="configurationParser"/>
     <bean id="fileConfigurationParser" class="org.dbaron.mower.parser.FileConfigurationParser">
-        <constructor-arg name="orientationsDictionnary" ref="orientationsDictionnary"/>
-        <constructor-arg name="movesDictionnary" ref="movesDictionnary"/>
+        <constructor-arg name="orientationsDictionary" ref="orientationsDictionary"/>
+        <constructor-arg name="movesDictionary" ref="movesDictionary"/>
     </bean>
 
     <alias name="moveProviderServiceImpl" alias="moveProviderService"/>

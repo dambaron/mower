@@ -1,6 +1,8 @@
 package org.dbaron.mower.model;
 
 /**
+ * A point in a cartesian coordinate system.
+ * Described by a position and an orientation.
  * Created by dbaron on 28/01/15.
  */
 public class Point {

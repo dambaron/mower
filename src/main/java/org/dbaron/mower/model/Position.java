@@ -1,6 +1,7 @@
 package org.dbaron.mower.model;
 
 /**
+ * An x,y-position in a cartesian coordinate system
  * Created by dbaron on 27/01/15.
  */
 public class Position {

@@ -1,6 +1,7 @@
 package org.dbaron.mower.model;
 
 /**
+ * A move followed by a mower
  * Created by dbaron on 27/01/15.
  */
 public class Move {

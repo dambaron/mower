@@ -5,6 +5,7 @@ import com.google.common.collect.Table;
 import org.apache.commons.lang3.Validate;
 
 /**
+ * A rectangular field in a cartesian coordinate system
  * Created by dbaron on 27/01/15.
  */
 public class Field {
@@ -21,7 +22,7 @@ public class Field {
 
     /**
      * Builds a Field instance based upon the lower left hand corner position
-     * and the uper right hand corner position
+     * and the upper right hand corner position
      * @param lowerLeftHandCorner - the lower left hand corner cartesian position
      * @param upperRightHandCorner - the upper right hand corner cartesian position
      */

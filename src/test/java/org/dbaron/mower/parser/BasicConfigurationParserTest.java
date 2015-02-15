@@ -26,10 +26,10 @@ public class BasicConfigurationParserTest {
     private static final ImmutableSet<String> ALLOWED_MOVES = ImmutableSet.of("G", "D", "A");
 
     private static final String DEFAULT_FIELD_DEFINITION = "5 5";
-    private static final Position DEFAUT_LOWER_LEFT_HAND_CORNER = new Position(0, 0);
-    private static final Position DEFAUT_UPPER_RIGHT_HAND_CORNER = new Position(5, 5);
+    private static final Position DEFAULT_LOWER_LEFT_HAND_CORNER = new Position(0, 0);
+    private static final Position DEFAULT_UPPER_RIGHT_HAND_CORNER = new Position(5, 5);
     private static final Field DEFAULT_FIELD =
-            new Field(DEFAUT_LOWER_LEFT_HAND_CORNER, DEFAUT_UPPER_RIGHT_HAND_CORNER);
+            new Field(DEFAULT_LOWER_LEFT_HAND_CORNER, DEFAULT_UPPER_RIGHT_HAND_CORNER);
 
     private static final String DEFAULT_POINT_DEFINITION = "10 42 W";
     private static final Position POSITION_10_42 = new Position(10, 42);
@@ -125,7 +125,7 @@ public class BasicConfigurationParserTest {
     }
 
     @Test
-    public void testValidateMovesThrowsIllegalArguementExceptionForUnknowMoves() throws Exception {
+    public void testValidateMovesThrowsIllegalArgumentExceptionForUnknownMoves() throws Exception {
 
         List<String> moveElements = Arrays.asList(
                 "A", "D", "G",
@@ -171,8 +171,8 @@ public class BasicConfigurationParserTest {
         Field field = basicConfigurationParser.buildField(DEFAULT_FIELD_DEFINITION);
 
         assertThat(field, is(notNullValue()));
-        assertThat(field.getLowerLeftHandCorner(), is(DEFAUT_LOWER_LEFT_HAND_CORNER));
-        assertThat(field.getUpperRightHandCorner(), is(DEFAUT_UPPER_RIGHT_HAND_CORNER));
+        assertThat(field.getLowerLeftHandCorner(), is(DEFAULT_LOWER_LEFT_HAND_CORNER));
+        assertThat(field.getUpperRightHandCorner(), is(DEFAULT_UPPER_RIGHT_HAND_CORNER));
     }
 
     @Test
@@ -181,8 +181,8 @@ public class BasicConfigurationParserTest {
         Field field = basicConfigurationParser.buildField(DEFAULT_FIELD_DEFINITION);
 
         assertThat(field, is(notNullValue()));
-        assertThat(field.getLowerLeftHandCorner(), is(DEFAUT_LOWER_LEFT_HAND_CORNER));
-        assertThat(field.getUpperRightHandCorner(), is(DEFAUT_UPPER_RIGHT_HAND_CORNER));
+        assertThat(field.getLowerLeftHandCorner(), is(DEFAULT_LOWER_LEFT_HAND_CORNER));
+        assertThat(field.getUpperRightHandCorner(), is(DEFAULT_UPPER_RIGHT_HAND_CORNER));
     }
 
     @Test

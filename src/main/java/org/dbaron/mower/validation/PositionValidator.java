@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
+ * A validator for Position instances
  * Created by dbaron on 28/01/15.
  */
 public class PositionValidator {

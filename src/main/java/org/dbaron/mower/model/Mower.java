@@ -6,11 +6,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * A mower using cartesian coordinate system
  * Created by dbaron on 28/01/15.
  */
 public class Mower implements OrientationAware, PositionAware {
 
-    private WayPoint initialWayPoint;
+    private final WayPoint initialWayPoint;
     private LinkedList<WayPoint> wayPoints;
     private LinkedList<Move> moveSequence;
     private int skippedMoves = 0;

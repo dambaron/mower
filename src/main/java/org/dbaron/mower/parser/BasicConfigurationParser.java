@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * A basic configuration parser using strings as input.
  * Created by dbaron on 29/01/15.
  */
 public class BasicConfigurationParser extends AbstractConfigurationParser implements ConfigurationParser {
@@ -45,19 +46,19 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
         super();
     }
 
-    public BasicConfigurationParser(Set<String> orientationsDictionnary,
-                                    Set<String> movesDictionnary) {
-        super(orientationsDictionnary, movesDictionnary);
+    public BasicConfigurationParser(Set<String> orientationsDictionary,
+                                    Set<String> movesDictionary) {
+        super(orientationsDictionary, movesDictionary);
     }
 
     @Override
-    public Set<String> getOrientationsDictionnary() {
-        return super.getOrientationsDictionnary();
+    public Set<String> getOrientationsDictionary() {
+        return super.getOrientationsDictionary();
     }
 
     @Override
-    public Set<String> getMovesDictionnary() {
-        return super.getMovesDictionnary();
+    public Set<String> getMovesDictionary() {
+        return super.getMovesDictionary();
     }
 
     @Override
@@ -132,19 +133,19 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
         }
     }
 
-    protected final void validateDictionnaryValue(String value, Set<String> dictionnary) {
-        validateDictionnaryValues(Arrays.asList(value), dictionnary);
+    protected final void validateDictionaryValue(String value, Set<String> dictionary) {
+        validateDictionaryValues(Arrays.asList(value), dictionary);
     }
 
-    protected final void validateDictionnaryValues(List<String> values, Set<String> dictionnary) {
+    protected final void validateDictionaryValues(List<String> values, Set<String> dictionary) {
         Validate.notNull(values);
-        Validate.notNull(dictionnary);
+        Validate.notNull(dictionary);
 
         Set<String> valueSet = new HashSet<>();
         valueSet.addAll(values);
-        if (!dictionnary.containsAll(valueSet)) {
+        if (!dictionary.containsAll(valueSet)) {
 
-            Sets.SetView<String> difference = Sets.difference(valueSet, dictionnary);
+            Sets.SetView<String> difference = Sets.difference(valueSet, dictionary);
             LOGGER.error("Unknown values found : {}", difference);
             throw new IllegalArgumentException("Unknown values found : " + difference);
         }
@@ -174,14 +175,14 @@ public class BasicConfigurationParser extends AbstractConfigurationParser implem
 
         validateNumericValue(pointElements.get(0));
         validateNumericValue(pointElements.get(1));
-        validateDictionnaryValue(pointElements.get(2), getOrientationsDictionnary());
+        validateDictionaryValue(pointElements.get(2), getOrientationsDictionary());
     }
 
     @Override
     public void validateMoves(List<String> moveElements) {
         Validate.notEmpty(moveElements, "moveElements was empty");
 
-        validateDictionnaryValues(moveElements, getMovesDictionnary());
+        validateDictionaryValues(moveElements, getMovesDictionary());
     }
 
     @Override

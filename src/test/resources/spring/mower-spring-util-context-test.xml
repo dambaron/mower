@@ -5,14 +5,14 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <util:set id="orientationsDictionnary">
+    <util:set id="orientationsDictionary">
         <value>#{T(org.dbaron.mower.model.reference.CardinalOrientation).N.code}</value>
         <value>#{T(org.dbaron.mower.model.reference.CardinalOrientation).S.code}</value>
         <value>#{T(org.dbaron.mower.model.reference.CardinalOrientation).W.code}</value>
         <value>#{T(org.dbaron.mower.model.reference.CardinalOrientation).E.code}</value>
     </util:set>
 
-    <util:set id="movesDictionnary">
+    <util:set id="movesDictionary">
         <value>#{T(org.dbaron.mower.model.reference.CartesianTranslation).A.code}</value>
         <value>#{T(org.dbaron.mower.model.reference.CartesianTranslation).R.code}</value>
         <value>#{T(org.dbaron.mower.model.reference.CartesianRotation).G.code}</value>

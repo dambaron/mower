@@ -37,7 +37,7 @@ public class MowerApp {
     private static final Logger LOGGER = LoggerFactory.getLogger(MowerApp.class);
 
     // CLI related objects
-    private static CommandLineParser parser = new PosixParser();
+    private static final CommandLineParser POSIX_PARSER = new PosixParser();
     private static Options appOptions = new Options();
 
     //Services
@@ -62,7 +62,7 @@ public class MowerApp {
         // parse the command line arguments group by group
         try {
             // create the parser
-            CommandLine line = parser.parse(appOptions, args);
+            CommandLine line = POSIX_PARSER.parse(appOptions, args);
 
             if (line.hasOption("c")) {
 
@@ -130,7 +130,7 @@ public class MowerApp {
     }
 
     /**
-     * Launch a mow based on a given gonfiguration file
+     * Launch a mow based on a given configuration file
      * @param pathToConfigurationFile - the path to the configuration file
      */
     public void launch(String pathToConfigurationFile) {

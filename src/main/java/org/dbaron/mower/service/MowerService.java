@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * A service managing mowers and fields
  * Created by dbaron on 28/01/15.
  */
 public interface MowerService {

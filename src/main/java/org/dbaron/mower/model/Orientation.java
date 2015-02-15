@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * An orientation
  * Created by dbaron on 27/01/15.
  */
 public class Orientation {

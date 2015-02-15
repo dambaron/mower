@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * A configuration parser using files as input.
  * Created by dbaron on 29/01/15.
  */
 public class FileConfigurationParser extends BasicConfigurationParser implements ConfigurationParser {
@@ -25,9 +26,9 @@ public class FileConfigurationParser extends BasicConfigurationParser implements
         super();
     }
 
-    public FileConfigurationParser(Set<String> orientationsDictionnary,
-                                   Set<String> movesDictionnary) {
-        super(orientationsDictionnary, movesDictionnary);
+    public FileConfigurationParser(Set<String> orientationsDictionary,
+                                   Set<String> movesDictionary) {
+        super(orientationsDictionary, movesDictionary);
     }
 
     public File getFile() {
@@ -54,12 +55,12 @@ public class FileConfigurationParser extends BasicConfigurationParser implements
     }
 
     @Override
-    public Set<String> getOrientationsDictionnary() {
-        return super.getOrientationsDictionnary();
+    public Set<String> getOrientationsDictionary() {
+        return super.getOrientationsDictionary();
     }
 
     @Override
-    public Set<String> getMovesDictionnary() {
-        return super.getMovesDictionnary();
+    public Set<String> getMovesDictionary() {
+        return super.getMovesDictionary();
     }
 }

@@ -5,40 +5,41 @@ import com.google.common.collect.ImmutableSet;
 import java.util.Set;
 
 /**
+ * Abstract class for all configuration parsers
  * Created by dbaron on 29/01/15.
  */
-public abstract class AbstractConfigurationParser {
+abstract class AbstractConfigurationParser {
 
-    private ImmutableSet<String> orientationsDictionnary;
-    private ImmutableSet<String> movesDictionnary;
+    private ImmutableSet<String> orientationsDictionary;
+    private ImmutableSet<String> movesDictionary;
 
     public AbstractConfigurationParser() {
         //DO NOTHING
     }
 
     /**
-     * Builds a configuration parser with a dictionnary for allowed orientations
-     * and another dictionnary for allowed moves
-     * @param orientationsDictionnary - a dictionnary for allowed orientations
-     * @param movesDictionnary - a dictionnary for allowed moves
+     * Builds a configuration parser with a dictionary for allowed orientations
+     * and another dictionary for allowed moves
+     * @param orientationsDictionary - a dictionary for allowed orientations
+     * @param movesDictionary - a dictionary for allowed moves
      */
-    public AbstractConfigurationParser(Set<String> orientationsDictionnary,
-                                       Set<String> movesDictionnary) {
+    public AbstractConfigurationParser(Set<String> orientationsDictionary,
+                                       Set<String> movesDictionary) {
 
-        this.orientationsDictionnary = ImmutableSet.<String>builder()
-                .addAll(orientationsDictionnary)
+        this.orientationsDictionary = ImmutableSet.<String>builder()
+                .addAll(orientationsDictionary)
                 .build();
 
-        this.movesDictionnary = ImmutableSet.<String>builder()
-                .addAll(movesDictionnary)
+        this.movesDictionary = ImmutableSet.<String>builder()
+                .addAll(movesDictionary)
                 .build();
     }
 
-    public Set<String> getOrientationsDictionnary() {
-        return orientationsDictionnary;
+    public Set<String> getOrientationsDictionary() {
+        return orientationsDictionary;
     }
 
-    public Set<String> getMovesDictionnary() {
-        return movesDictionnary;
+    public Set<String> getMovesDictionary() {
+        return movesDictionary;
     }
 }
