@@ -17,10 +17,10 @@ import org.junit.rules.ExpectedException;
 import java.util.LinkedList;
 import java.util.List;
 
-import static junit.framework.Assert.fail;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.fail;
 
 public class PositionValidatorTest {
 
